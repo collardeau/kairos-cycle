@@ -1,0 +1,17 @@
+{
+  "name": "kairos",
+  "version": "0.0.1",
+  "description": "Weather app that filters the forecast",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register --recursive",
+    "test:watch": "npm run test -- --watch"
+  },
+  "author": "Thomas Collardeau <thomas@collardeau.com> (http://thomas.collardeau.com/)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "5.8.23",
+    "chai": "3.3.0",
+    "mocha": "2.3.3"
+  }
+}
