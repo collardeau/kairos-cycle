@@ -1,0 +1,38 @@
+{
+	"city": {
+		"id":2643743,
+		"name":"London",
+		"coord": {
+			"lon":-0.12574,
+			"lat":51.50853},
+			"country":"GB",
+			"population":0 
+		},
+		"cod":"200",
+		"message":0.035,
+		"cnt":7,
+		"list":[{
+			"dt":1443610800,
+			"temp":{
+				"day":17.08,
+				"min":9.73,
+				"max":17.08,
+				"night":9.73,
+				"eve":13.36,
+				"morn":17.08
+			},
+			"pressure":1041.22,
+			"humidity":67,
+			"weather":[{
+				"id":800,
+				"main":"Clear",
+				"description":"sky is clear",
+				"icon":"01d"
+			}],
+			"speed":6.26,
+			"deg":89,
+			"clouds":0
+		},{
+			"dt":1443697200,"temp":{"day":17.21,"min":7.1,"max":17.55,"night":7.1,"eve":13.33,"morn":8.14},"pressure":1040.35,"humidity":79,"weather":[{"id":800,"main":"Clear","description":"sky is clear","icon":"01d"}],"speed":5.22,"deg":65,"clouds":0},{"dt":1443783600,"temp":{"day":16.39,"min":4.94,"max":17.61,"night":4.94,"eve":13.46,"morn":6.69},"pressure":1033.67,"humidity":85,"weather":[{"id":800,"main":"Clear","description":"sky is clear","icon":"02d"}],"speed":3.46,"deg":68,"clouds":8
+		},{
+			"dt":1443870000,"temp":{"day":15.63,"min":4.4,"max":16.82,"night":6.15,"eve":12.24,"morn":4.4},"pressure":1021.72,"humidity":89,"weather":[{"id":800,"main":"Clear","description":"sky is clear","icon":"01d"}],"speed":2.01,"deg":141,"clouds":0},{"dt":1443956400,"temp":{"day":18.1,"min":4.34,"max":18.55,"night":14.33,"eve":15.81,"morn":4.34},"pressure":1021.44,"humidity":80,"weather":[{"id":800,"main":"Clear","description":"sky is clear","icon":"01d"}],"speed":4.02,"deg":191,"clouds":0},{"dt":1444042800,"temp":{"day":20.22,"min":15.77,"max":20.22,"night":17.75,"eve":19.7,"morn":15.77},"pressure":1018.07,"humidity":0,"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"speed":7.17,"deg":180,"clouds":89,"rain":1.55},{"dt":1444129200,"temp":{"day":18.43,"min":16.35,"max":18.43,"night":16.35,"eve":17.7,"morn":16.53},"pressure":1013.79,"humidity":0,"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],"speed":5.83,"deg":209,"clouds":56,"rain":0.77}]}
