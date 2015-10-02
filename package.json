@@ -4,6 +4,7 @@
   "description": "Weather app that filters the forecast",
   "main": "index.js",
   "scripts": {
+    "dev": "webpack-dev-server --inline --progress --colors --content-base public", 
     "test": "mocha --compilers js:babel/register --recursive",
     "test:watch": "npm run test -- --watch"
   },
@@ -12,6 +13,8 @@
   "devDependencies": {
     "babel": "5.8.23",
     "chai": "3.3.0",
-    "mocha": "2.3.3"
+    "mocha": "2.3.3",
+    "webpack": "1.12.2",
+    "webpack-dev-server": "1.12.0"
   }
 }
