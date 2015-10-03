@@ -1,10 +1,14 @@
 /** @jsx hJSX */ 
 import Cycle from '@cycle/core';
 import {hJSX, makeDOMDriver } from '@cycle/dom';
-console.log('hello world !');
+import {cities$} from '../mockServer';
+
+let Ob$ = Cycle.Rx.Observable;
 
 function intent(DOM){
-  return {
+
+ return {
+    requestCities$: cities$,
     changeMinTemp$ : DOM.select('#minTemp').events('input')
       .map(e => e.target.value)
       .debounce(100),
@@ -14,37 +18,49 @@ function intent(DOM){
   };
 }
 
-function model(actions){ // combineLatest() for more streams
+function model(actions){ 
+
   return Cycle.Rx.Observable.combineLatest(
     actions.changeMinTemp$.startWith(10),
     actions.changeMaxCloud$.startWith(20),
-    (minTemp, maxCloud) => ({minTemp, maxCloud})
+    actions.requestCities$.startWith([]),
+    (minTemp, maxCloud, cities) => ({minTemp, maxCloud, cities})
   );
 }
 
+function renderMinTempSlider(minTemp){
+  return (
+    <div>
+      <input id='minTemp' type='range' min='-20' max='40' value= {minTemp} />
+      { minTemp }
+    </div> 
+  )
+}
+
+function renderCity(city) {
+  return <div>{city ? city.name : 'city'}</div>
+};
+
 function view(state$) {
-  return state$.map(({minTemp, maxCloud}) => {
-    console.log('min temp is: ' + minTemp + ' and max cloud is ' + maxCloud);
+  return state$.map(({minTemp, maxCloud, cities}) => {
    return (
       <div>
-        <input id='minTemp' type='range' min='-20' max='40' value= {minTemp} />
-        { minTemp }
+        { renderMinTempSlider(minTemp) }
+
         <input id='maxCloud' type='range' min='-20' max='40' value= {maxCloud} />
         { maxCloud }
+
+        { cities.map(city => renderCity(city) ) }
+
       </div> 
     )
   });
 }
 
 function main ({DOM}) {
-
-  let actions = intent(DOM);
-  let state$ = model(actions);
-
   return {
-    DOM: view(state$)
+    DOM: view(model(intent(DOM)))
   };
-
 }
 
 Cycle.run(main, {
