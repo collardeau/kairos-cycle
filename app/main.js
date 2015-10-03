@@ -2,16 +2,30 @@
 import Cycle from '@cycle/core';
 import {hJSX, makeDOMDriver } from '@cycle/dom';
 import {cities$} from '../mockServer';
+import labeledSlider from './components/labeledSlider';
 
 let Ob$ = Cycle.Rx.Observable;
 
-function renderMinTempSlider(minTemp){
-  return (
-    <div>
-      <input id='minTemp' type='range' min='-20' max='40' value= {minTemp} />
-      min temp: { minTemp }
-    </div> 
-  )
+function intent(DOM){
+
+ return {
+    requestCities$: cities$,
+    changeMinTemp$ : DOM.select('#minTemp').events('newValue')
+      .map(e => e.detail)
+      .debounce(10)
+  };
+}
+
+function model(actions){ 
+
+  return Ob$.combineLatest(
+    actions.changeMinTemp$.startWith(4),
+    actions.requestCities$.startWith([]),
+    (minTemp, cities) => ({
+      filteredCities: cities.filter(city => city ? city.minTemp > minTemp: null),
+      minTemp
+    })
+  );
 }
 
 function renderCity(city) {
@@ -19,48 +33,21 @@ function renderCity(city) {
   return (
     <div>
       <h3>{city.name}</h3>
-      <p> min temp over the last 7 days: <b>{ city.minTemp }</b>C</p>
+      <p> min temp over the next 7 days: <b>{ city.minTemp }</b>C</p>
     </div>
   )
 };
 
-function intent(DOM){
-
- return {
-    requestCities$: cities$,
-    changeMinTemp$ : DOM.select('#minTemp').events('input')
-      .map(e => e.target.value)
-      .debounce(10),
-    changeMaxCloud$ : DOM.select('#maxCloud').events('input')
-      .map(e => e.target.value)
-      .debounce(10),
-  };
-}
-
-function model(actions){ 
-  return Cycle.Rx.Observable.combineLatest(
-    actions.changeMinTemp$.startWith(10),
-    actions.changeMaxCloud$.startWith(20),
-    actions.requestCities$.startWith([]),
-    (minTemp, maxCloud, cities) => ({
-      cities: cities.filter(city => city ? city.minTemp > minTemp: null),
-      minTemp, 
-      maxCloud
-    })
-  );
-}
-
 function view(state$) {
-  return state$.map(({minTemp, maxCloud, cities}) => {
-    console.log(cities);
-   return (
+  return state$.map(({minTemp, maxCloud, filteredCities}) => {
+    return (
       <div>
-        { renderMinTempSlider(minTemp) }
+        <labeled-slider 
+          id="minTemp" label="Min Temperature" 
+          initial = {minTemp} min="0" max="40"
+        />
 
-        <input id='maxCloud' type='range' min='-20' max='40' value= {maxCloud} />
-        { maxCloud }
-
-        { cities.map(city => renderCity(city) ) }
+        { filteredCities.map(city => renderCity(city) ) }
 
       </div> 
     )
@@ -74,5 +61,7 @@ function main ({DOM}) {
 }
 
 Cycle.run(main, {
-  DOM: makeDOMDriver('#app')
+  DOM: makeDOMDriver('#app', {
+    'labeled-slider': labeledSlider 
+  })
 });
