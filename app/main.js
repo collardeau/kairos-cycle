@@ -44,7 +44,7 @@ function view(state$) {
       <div>
         <labeled-slider 
           id="minTemp" label="Min Temperature" 
-          initial = {minTemp} min="0" max="40"
+          initial = {minTemp} min="0" max="30"
         />
 
         { filteredCities.map(city => renderCity(city) ) }
