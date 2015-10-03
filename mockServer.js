@@ -17,10 +17,11 @@ function model(city){
     return {
       name: city.name, 
       forecasts: list.map(forecast => {
+        console.log(forecast);
         return {
           date: new Date(forecast.dt * 1000),
           minTemp: forecast.temp.min,
-          clouds: forecast.clouds
+          maxCloud: forecast.clouds,
         }
       })
     } 
@@ -28,11 +29,14 @@ function model(city){
   
   function deriveData({name, forecasts}){
     const min = prop => R.reduce((min, next) => R.min(next[prop], min));
+    const max = prop => R.reduce((max, next) => R.max(next[prop], max));
     const minTemp = min('minTemp')(forecasts[0].minTemp)(forecasts);
+    const maxCloud = max('maxCloud')(forecasts[0].maxCloud)(forecasts);
     return {
       name,
       forecasts,
-      minTemp
+      minTemp,
+      maxCloud
     }
   }
 

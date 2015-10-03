@@ -25,7 +25,7 @@ export default function labeledSlider(responses) {
 
   function view(state$) {
     return state$.map(state => {
-      let { label, min, max } = state.props;
+      let { label, min, max, mea } = state.props;
       let value = state.value;
       return (
         <div>
@@ -36,7 +36,7 @@ export default function labeledSlider(responses) {
             min={min} 
             value={value} 
           />
-          { value } C { label }
+          { value } { mea } { label }
         </div>      
       );
     });
