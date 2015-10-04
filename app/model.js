@@ -13,11 +13,13 @@ let
 
 export default function model(actions){ 
 
+  let { changeMaxDays$, changeMaxCloud$, changeMinTemp$ } = actions;
+
   return Ob$.combineLatest(
 
     // user action streams
-    actions.changeMinTemp$.startWith(4),
-    actions.changeMaxCloud$.startWith(100),
+    changeMinTemp$.startWith(4),
+    changeMaxCloud$.startWith(100),
 
     // api data prettied up with only forecast days
     
@@ -55,7 +57,7 @@ export default function model(actions){
       }).startWith([]),
   
     // selected days to forecast stream
-    Ob$.just(4).startWith(7),
+    changeMaxDays$.startWith(7),
   
     // combine to make stream with only selected days to forecast
     (cities, dateEnd) => {
@@ -82,10 +84,10 @@ export default function model(actions){
         ...city,
         minTemp: forecasts.reduce((min, next) => {
           return next.minTemp < min ? next.minTemp : min;      
-        }, 50),
+        }, forecasts[0].minTemp),
         maxCloud: forecasts.reduce((max, next) => {
           return next.maxCloud > max ? next.maxCloud : max;      
-        }, 0)
+        }, forecasts[0].maxCloud)
       }
   
     });

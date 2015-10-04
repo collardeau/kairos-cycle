@@ -35,6 +35,10 @@ function view(state$) {
           key = {2} id="maxCloud" label="Max Cloud Coverage"  mea="%"
           initial = {maxCloud} min="0" max="100"
         />
+        <labeled-slider 
+          key = {3} id="maxDays" label="Max Day Forecast"  mea="days"
+          initial = {4} min="1" max="7"
+        />
 
         { filteredCities.map(city => renderCity(city) ) }
 
