@@ -35,21 +35,29 @@ function model(actions){
 
     (minTemp, maxCloud, cities) => ({
       filteredCities: cities.filter(city => passes(city, minTemp, maxCloud)),
-        minTemp,
-        maxCloud
+      minTemp,
+      maxCloud
     })
 
   );
 }
 
+function renderForecast(forecast){
+  return (
+    <span>___ </span>
+  )
+}
+
 function renderCity(city) {
-  if (!city) { return null }
+  if (!city) { return <div>Loading</div> }
+  let { name, maxCloud, minTemp, forecasts } = city;
   return (
     <div>
-      <h3>{city.name}</h3>
+      <h3>{name}</h3>
       <p>Over the next 7 days:</p>
-      <p> max cloud: <b>{ city.maxCloud }</b></p>
-      <p> min temp: <b>{ city.minTemp }</b>C</p>
+      <p> max cloud: <b>{ maxCloud }</b></p>
+      <p> min temp: <b>{ minTemp }</b>C</p>
+      { forecasts.map(forecast => renderForecast(forecast))}
     </div>
   )
 };
@@ -59,11 +67,11 @@ function view(state$) {
     return (
       <div>
         <labeled-slider 
-          id="minTemp" label="Min Temperature" mea="C"
+          key = {1} id="minTemp" label="Min Temperature" mea="C"
           initial = {minTemp} min="0" max="30"
         />
         <labeled-slider 
-          id="maxCloud" label="Max Cloud Coverage"  mea="%"
+          key = {2} id="maxCloud" label="Max Cloud Coverage"  mea="%"
           initial = {maxCloud} min="0" max="100"
         />
 
@@ -75,8 +83,12 @@ function view(state$) {
 }
 
 function main ({DOM}) {
+  let actions = intent(DOM);
+  let state$ = model(actions);
+  let vtree$ = view(state$);
+
   return {
-    DOM: view(model(intent(DOM)))
+    DOM: vtree$
   };
 }
 

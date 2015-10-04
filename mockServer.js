@@ -17,7 +17,6 @@ function model(city){
     return {
       name: city.name, 
       forecasts: list.map(forecast => {
-        console.log(forecast);
         return {
           date: new Date(forecast.dt * 1000),
           minTemp: forecast.temp.min,
@@ -52,7 +51,7 @@ export let cities$ =  Ob$.combineLatest(
   ber$.startWith(null),
   lon$.startWith(null),
   (bar, ber, lon) => {
-    console.log( lon);
+    //console.log( lon);
     return [bar, ber, lon]
   }
 );
