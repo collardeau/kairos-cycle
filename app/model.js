@@ -18,34 +18,37 @@ let citiesRe$ =  Ob$.combineLatest(
   (bar, ber, lon) => [bar, ber, lon]
 );
 
-let citiesClean$ = citiesRe$.map(citiesRes => {
-  if (!citiesRes) return null;
-  return citiesRes.map(cityRes => {
-    if (!cityRes) return null;
-    return {
-      name: cityRes.city.name ,
-      forecasts: cityRes.list.map(forecast => ({
-        date: new Date(forecast.dt * 1000),
-        minTemp: forecast.temp.min,
-        maxCloud: forecast.clouds,
-      }))
-    }
-  });
-});
-
-//citiesClean$.subscribe(res => console.log(res))
-
 let dateEnd$ = Ob$.just(4);
 
 let citiesTrim$ = Ob$.combineLatest(
-  citiesClean$.startWith([]),
+
+  // purified city response streams 
+  
+  citiesRe$.map(citiesRes => {
+    return citiesRes.map(cityRes => {
+      if (!cityRes) return null;
+      return {
+        name: cityRes.city.name ,
+        forecasts: cityRes.list.map(forecast => ({
+          date: new Date(forecast.dt * 1000),
+          minTemp: forecast.temp.min,
+          maxCloud: forecast.clouds,
+        }))
+      }
+    });
+  }).startWith([]),
+
+  // days to forecast stream
+
   dateEnd$.startWith(7),
+
+  //combine
   (cities, dateEnd) => {
     return cities.map(city => {
       if (!city) return null;
       return {
         ...city,
-       forecasts: city.forecasts.slice(0,4)
+       forecasts: city.forecasts.slice(0, dateEnd)
       };    
     });
   }
