@@ -1,6 +1,62 @@
 import {Rx} from '@cycle/core';
 let Ob$ = Rx.Observable;
 
+let 
+  bcnReq = require('json!../sample-data/barcelona.json'),
+  berReq = require('json!../sample-data/berlin.json'),
+  lonReq = require('json!../sample-data/london.json');
+
+let 
+  bcnRe$ = Ob$.just(bcnReq).delay(2400),
+  berRe$ = Ob$.just(berReq).delay(1200),
+  lonRe$ = Ob$.just(lonReq).delay(800);
+
+const sieve = ({city, list}) => {
+  return {
+    name: city.name, 
+    forecasts: list.map(forecast => {
+      return {
+        date: new Date(forecast.dt * 1000),
+        minTemp: forecast.temp.min,
+        maxCloud: forecast.clouds,
+       }
+    })
+  } 
+}
+
+let 
+  bcnPure$ = bcnRe$.map(city => sieve(city)),
+  berPure$ = berRe$.map(city => sieve(city)),
+  lonPure$ = lonRe$.map(city => sieve(city));
+
+const extract = ({name, forecasts}) => {
+  const min = prop => R.reduce((min, next) => R.min(next[prop], min));
+  const max = prop => R.reduce((max, next) => R.max(next[prop], max));
+  const minTemp = min('minTemp')(forecasts[0].minTemp)(forecasts);
+  const maxCloud = max('maxCloud')(forecasts[0].maxCloud)(forecasts);
+  return {
+    name,
+    forecasts,
+    minTemp,
+    maxCloud
+  }
+}
+
+let
+  bcn$ = bcnPure$.map(city => extract(city)),
+  ber$ = berPure$.map(city => extract(city)),
+  lon$ = lonPure$.map(city => extract(city));
+
+let cities$ =  Ob$.combineLatest(
+  bcn$.startWith(null),
+  ber$.startWith(null),
+  lon$.startWith(null),
+  (bar, ber, lon) => {
+    //console.log( lon);
+    return [bar, ber, lon]
+  }
+);
+
 export default function model(actions){ 
 
   function passes(city, minTemp, maxCloud) {
