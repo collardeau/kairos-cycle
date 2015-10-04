@@ -1,4 +1,5 @@
 import {Rx} from '@cycle/core';
+import R from 'Ramda';
 let Ob$ = Rx.Observable;
 
 let 
@@ -11,20 +12,26 @@ let
   berRe$ = Ob$.just(berReq).delay(1200),
   lonRe$ = Ob$.just(lonReq).delay(800);
 
-let citiesRe$ =  Ob$.combineLatest(
-  bcnRe$.startWith(null),
-  berRe$.startWith(null),
-  lonRe$.startWith(null),
-  (bar, ber, lon) => [bar, ber, lon]
-);
+let cities$ = Ob$.combineLatest(
 
-let dateEnd$ = Ob$.just(4);
+  // sieved responses stream
 
-let citiesTrim$ = Ob$.combineLatest(
+  Ob$.combineLatest(
 
-  // purified city response streams 
-  
-  citiesRe$.map(citiesRes => {
+    // each raw response stream
+
+    bcnRe$.startWith(null),
+    berRe$.startWith(null),
+    lonRe$.startWith(null),
+
+    // combine to make sieved responses stream 
+
+    (bar, ber, lon) => [bar, ber, lon]
+
+  ).map(citiesRes => {
+
+    // and sieve the raw streams
+
     return citiesRes.map(cityRes => {
       if (!cityRes) return null;
       return {
@@ -38,11 +45,10 @@ let citiesTrim$ = Ob$.combineLatest(
     });
   }).startWith([]),
 
-  // days to forecast stream
+  // selected days to forecast stream
+  Ob$.just(2).startWith(7),
 
-  dateEnd$.startWith(7),
-
-  //combine
+  // combine to make stream with only selected days to forecast
   (cities, dateEnd) => {
     return cities.map(city => {
       if (!city) return null;
@@ -52,56 +58,30 @@ let citiesTrim$ = Ob$.combineLatest(
       };    
     });
   }
-);
 
-citiesTrim$.subscribe(res => console.log(res))
+).map(c => {
 
-//let citiesWithDays$ =  Ob$.combineLatest(
-//  citiesRe$.startWith([]),
-//  dateEnd$.startWith(7),
-//  (cities, dateEnd) => {
-//    return cities.map(city => {
-//      
-//    });
-//    let forecasts = 
-//    return city;  
-//  }
-//);
-//
-//citiesWithDays$.subscribe(res => console.log(res))
+  // add derived data based on selected forecast
 
-let 
-  bcnPure$ = bcnRe$.map(city => sieve(city)),
-  berPure$ = berRe$.map(city => sieve(city)),
-  lonPure$ = lonRe$.map(city => sieve(city));
+  if (!c) return null;
+  return c.map(d => {
+    if (!d) return null;
+    let {forecasts} = d;
+    const min = prop => R.reduce((min, next) => R.min(next[prop], min));
+    const max = prop => R.reduce((max, next) => R.min(next[prop], max));
+    const minTemp = min('minTemp')(forecasts[0].minTemp)(forecasts);
+    const maxCloud = max('maxCloud')(forecasts[0].maxCloud)(forecasts);
+    return {
+      ...d,
+      minTemp,
+      maxCloud
+    }
 
-const extract = ({name, forecasts}) => {
-  const min = prop => R.reduce((min, next) => R.min(next[prop], min));
-sponses$.subscribe(res => console.log(res))
-  const minTemp = min('minTemp')(forecasts[0].minTemp)(forecasts);
-  const maxCloud = max('maxCloud')(forecasts[0].maxCloud)(forecasts);
-  return {
-    name,
-    forecasts,
-    minTemp,
-    maxCloud
-  }
-}
+  });
 
-let
-  bcn$ = bcnPure$.map(city => extract(city)),
-  ber$ = berPure$.map(city => extract(city)),
-  lon$ = lonPure$.map(city => extract(city));
+});
 
-let cities$ =  Ob$.combineLatest(
-  bcn$.startWith(null),
-  ber$.startWith(null),
-  lon$.startWith(null),
-  (bar, ber, lon) => {
-    //console.log( lon);
-    return [bar, ber, lon]
-  }
-);
+cities$.subscribe(res => console.log(res))
 
 export default function model(actions){ 
 
