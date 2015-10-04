@@ -1,5 +1,4 @@
 import {Rx} from '@cycle/core';
-import R from 'Ramda';
 let Ob$ = Rx.Observable;
 
 let 
@@ -46,7 +45,7 @@ let cities$ = Ob$.combineLatest(
   }).startWith([]),
 
   // selected days to forecast stream
-  Ob$.just(2).startWith(7),
+  Ob$.just(5).startWith(7),
 
   // combine to make stream with only selected days to forecast
   (cities, dateEnd) => {
@@ -67,14 +66,17 @@ let cities$ = Ob$.combineLatest(
   return c.map(d => {
     if (!d) return null;
     let {forecasts} = d;
-    const min = prop => R.reduce((min, next) => R.min(next[prop], min));
-    const max = prop => R.reduce((max, next) => R.min(next[prop], max));
-    const minTemp = min('minTemp')(forecasts[0].minTemp)(forecasts);
-    const maxCloud = max('maxCloud')(forecasts[0].maxCloud)(forecasts);
-    return {
+   return {
       ...d,
-      minTemp,
-      maxCloud
+
+      minTemp: forecasts.reduce((min, next) => {
+        return next.minTemp < min ? next.minTemp : min;      
+      }, 50),
+
+      maxCloud: forecasts.reduce((max, next) => {
+        return next.maxCloud > max ? next.maxCloud : max;      
+      }, 0)
+ 
     }
 
   });
