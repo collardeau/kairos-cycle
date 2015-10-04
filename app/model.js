@@ -19,7 +19,7 @@ export default function model(actions){
     actions.changeMinTemp$.startWith(4),
     actions.changeMaxCloud$.startWith(100),
 
-    // api data prettied up with only relevant forecast days
+    // api data prettied up with only forecast days
     
     Ob$.combineLatest(
   
@@ -37,15 +37,15 @@ export default function model(actions){
   
         (bar, ber, lon) => [bar, ber, lon]
   
-      ).map(citiesRes => {
+      ).map(cities => {
   
-        // and sieve the raw streams
+        // sieve the raw streams
   
-        return citiesRes.map(cityRes => {
-          if (!cityRes) return null;
+        return cities.map(city => {
+          if (!city) return null;
           return {
-            name: cityRes.city.name ,
-            forecasts: cityRes.list.map(forecast => ({
+            name: city.city.name ,
+            forecasts: city.list.map(forecast => ({
               date: new Date(forecast.dt * 1000),
               minTemp: forecast.temp.min,
               maxCloud: forecast.clouds,
@@ -55,7 +55,7 @@ export default function model(actions){
       }).startWith([]),
   
     // selected days to forecast stream
-    Ob$.just(5).startWith(7),
+    Ob$.just(4).startWith(7),
   
     // combine to make stream with only selected days to forecast
     (cities, dateEnd) => {
@@ -68,29 +68,24 @@ export default function model(actions){
       });
     }
   
-  ).map(c => {
+  ).map(cities => {
   
     // add derived data based on selected forecast
   
-    if (!c) return null;
+    if (!cities) return null;
+    return cities.map(city => {
 
-    return c.map(d => {
+      if (!city) return null;
+      let {forecasts} = city;
 
-      if (!d) return null;
-
-      let {forecasts} = d;
-
-     return {
-        ...d,
-  
+      return {
+        ...city,
         minTemp: forecasts.reduce((min, next) => {
           return next.minTemp < min ? next.minTemp : min;      
         }, 50),
-  
         maxCloud: forecasts.reduce((max, next) => {
           return next.maxCloud > max ? next.maxCloud : max;      
         }, 0)
-   
       }
   
     });
@@ -98,6 +93,7 @@ export default function model(actions){
   }).startWith([]),
 
     // combine cities and filters
+
     (minTemp, maxCloud, cities) => ({
       filteredCities: cities.filter(city => {
         if(!city) return null;
@@ -110,5 +106,4 @@ export default function model(actions){
 
   );
 }
-
 
