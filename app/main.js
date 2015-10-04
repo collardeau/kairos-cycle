@@ -1,46 +1,9 @@
 /** @jsx hJSX */ 
 import Cycle from '@cycle/core';
 import {hJSX, makeDOMDriver } from '@cycle/dom';
-import {cities$} from '../mockServer';
 import labeledSlider from './components/labeledSlider';
-
-let Ob$ = Cycle.Rx.Observable;
-
-function intent(DOM){
-
- return {
-    requestCities$: cities$,
-    changeMinTemp$ : DOM.select('#minTemp').events('newValue')
-      .map(e => e.detail)
-      .debounce(10),
-    changeMaxCloud$ : DOM.select('#maxCloud').events('newValue')
-      .map(e => e.detail)
-      .debounce(10)
-  };
-}
-
-function model(actions){ 
-
-  function passes(city, minTemp, maxCloud) {
-    if(!city) return null
-      return city.minTemp > minTemp 
-        && city.maxCloud < maxCloud;
-  }
-
-  return Ob$.combineLatest(
-
-    actions.changeMinTemp$.startWith(4),
-    actions.changeMaxCloud$.startWith(100),
-    actions.requestCities$.startWith([]),
-
-    (minTemp, maxCloud, cities) => ({
-      filteredCities: cities.filter(city => passes(city, minTemp, maxCloud)),
-      minTemp,
-      maxCloud
-    })
-
-  );
-}
+import intent from './intent'
+import model from './model'
 
 function renderForecast(forecast){
   return (
