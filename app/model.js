@@ -11,18 +11,61 @@ let
   berRe$ = Ob$.just(berReq).delay(1200),
   lonRe$ = Ob$.just(lonReq).delay(800);
 
-const sieve = ({city, list}) => {
-  return {
-    name: city.name, 
-    forecasts: list.map(forecast => {
-      return {
+let citiesRe$ =  Ob$.combineLatest(
+  bcnRe$.startWith(null),
+  berRe$.startWith(null),
+  lonRe$.startWith(null),
+  (bar, ber, lon) => [bar, ber, lon]
+);
+
+let citiesClean$ = citiesRe$.map(citiesRes => {
+  if (!citiesRes) return null;
+  return citiesRes.map(cityRes => {
+    if (!cityRes) return null;
+    return {
+      name: cityRes.city.name ,
+      forecasts: cityRes.list.map(forecast => ({
         date: new Date(forecast.dt * 1000),
         minTemp: forecast.temp.min,
         maxCloud: forecast.clouds,
-       }
-    })
-  } 
-}
+      }))
+    }
+  });
+});
+
+//citiesClean$.subscribe(res => console.log(res))
+
+let dateEnd$ = Ob$.just(4);
+
+let citiesTrim$ = Ob$.combineLatest(
+  citiesClean$.startWith([]),
+  dateEnd$.startWith(7),
+  (cities, dateEnd) => {
+    return cities.map(city => {
+      if (!city) return null;
+      return {
+        ...city,
+       forecasts: city.forecasts.slice(0,4)
+      };    
+    });
+  }
+);
+
+citiesTrim$.subscribe(res => console.log(res))
+
+//let citiesWithDays$ =  Ob$.combineLatest(
+//  citiesRe$.startWith([]),
+//  dateEnd$.startWith(7),
+//  (cities, dateEnd) => {
+//    return cities.map(city => {
+//      
+//    });
+//    let forecasts = 
+//    return city;  
+//  }
+//);
+//
+//citiesWithDays$.subscribe(res => console.log(res))
 
 let 
   bcnPure$ = bcnRe$.map(city => sieve(city)),
@@ -31,7 +74,7 @@ let
 
 const extract = ({name, forecasts}) => {
   const min = prop => R.reduce((min, next) => R.min(next[prop], min));
-  const max = prop => R.reduce((max, next) => R.max(next[prop], max));
+sponses$.subscribe(res => console.log(res))
   const minTemp = min('minTemp')(forecasts[0].minTemp)(forecasts);
   const maxCloud = max('maxCloud')(forecasts[0].maxCloud)(forecasts);
   return {
