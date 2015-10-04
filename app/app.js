@@ -15,7 +15,6 @@ function renderCity(city) {
   return (
     <div>
       <h3>{name}</h3>
-      <p>Over the next 7 days:</p>
       <p> max cloud: <b>{ maxCloud }</b></p>
       <p> min temp: <b>{ minTemp }</b>C</p>
       { forecasts.map(forecast => renderForecast(forecast))}
@@ -28,6 +27,10 @@ function view(state$) {
     return (
       <div>
         <labeled-slider 
+          key = {3} id="maxDays" label="Max Day Forecast"  mea="days"
+          initial = {4} min="1" max="7"
+        />
+        <labeled-slider 
           key = {1} id="minTemp" label="Min Temperature" mea="C"
           initial = {minTemp} min="0" max="30"
         />
@@ -35,11 +38,6 @@ function view(state$) {
           key = {2} id="maxCloud" label="Max Cloud Coverage"  mea="%"
           initial = {maxCloud} min="0" max="100"
         />
-        <labeled-slider 
-          key = {3} id="maxDays" label="Max Day Forecast"  mea="days"
-          initial = {4} min="1" max="7"
-        />
-
         { filteredCities.map(city => renderCity(city) ) }
 
       </div> 

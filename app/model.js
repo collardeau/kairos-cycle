@@ -60,12 +60,12 @@ export default function model(actions){
     changeMaxDays$.startWith(7),
   
     // combine to make stream with only selected days to forecast
-    (cities, dateEnd) => {
+    (cities, maxDays) => {
       return cities.map(city => {
         if (!city) return null;
         return {
           ...city,
-         forecasts: city.forecasts.slice(0, dateEnd)
+         forecasts: city.forecasts.slice(0, maxDays)
         };    
       });
     }
