@@ -40,6 +40,7 @@ function view(state$) {
           initial = {maxCloud} min="0" max="100"
         />
 
+
         { 
 
         filteredCities.map(city => {
@@ -47,19 +48,13 @@ function view(state$) {
           if (!city) { return <div>Loading</div> }
           let { name, maxCloud, minTemp, forecasts } = city;
 
-          return (
-            <div>
-              <h3>{name}</h3>
-              <p> maximum cloud coverage: <b>{ maxCloud }</b>%</p>
-              <p> minimum day high: <b>{ minTemp }</b>C</p>
-              { forecasts.map(forecast => {
-                return (
-                  <div>forecast.date</div> 
-                )
-              })}
-            </div>
-          )
-        })
+          return <city name={name} 
+            maxCloud={ maxCloud } 
+            minTemp={ minTemp } 
+            forecasts = { forecasts }
+          />
+
+       })
 
         }
 

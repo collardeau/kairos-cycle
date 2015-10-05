@@ -51,15 +51,19 @@ export default function model(actions){
   
         // sieve the raw streams
   
-        return cities.map(city => {
-          if (!city) return null;
+        return cities.map(cityRaw => {
+          if (!cityRaw) return null;
+          let { city, list } = cityRaw;
           return {
-            name: city.city.name ,
-            forecasts: city.list.map(forecast => ({
-              date: new Date(forecast.dt * 1000),
-              minTemp: forecast.temp.min,
-              maxCloud: forecast.clouds,
-            }))
+            name: city.name ,
+            forecasts: list.map(forecast => {
+              let date = new Date(forecast.dt * 1000);
+              return {
+                date: date.getDate() + ' October',
+                minTemp: forecast.temp.min,
+                maxCloud: forecast.clouds,
+              }
+            })
           }
         });
       }).startWith([]),
