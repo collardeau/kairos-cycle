@@ -3,26 +3,6 @@ import {hJSX} from '@cycle/dom';
 import intent from './intent'
 import model from './model'
 
-function renderForecast(forecast){
-  return (
-    <span>___ </span>
-  )
-}
-
-function renderCity(city) {
-  if (!city) { return <div>Loading</div> }
-  let { name, maxCloud, minTemp, forecasts } = city;
-  //<button id='load'>Refresh</button>
-  return (
-    <div>
-      <h3>{name}</h3>
-      <p> maximum cloud coverage: <b>{ maxCloud }</b>%</p>
-      <p> minimum day high: <b>{ minTemp }</b>C</p>
-      { forecasts.map(forecast => renderForecast(forecast))}
-    </div>
-  )
-};
-
 function view(state$) {
   return state$.map(({minTemp, maxCloud, maxDays, minDays, filteredCities}) => {
     return (
@@ -59,7 +39,29 @@ function view(state$) {
           key = {2} id="maxCloud" label="Max Clouds"  mea="%"
           initial = {maxCloud} min="0" max="100"
         />
-        { filteredCities.map(city => renderCity(city) ) }
+
+        { 
+
+        filteredCities.map(city => {
+
+          if (!city) { return <div>Loading</div> }
+          let { name, maxCloud, minTemp, forecasts } = city;
+
+          return (
+            <div>
+              <h3>{name}</h3>
+              <p> maximum cloud coverage: <b>{ maxCloud }</b>%</p>
+              <p> minimum day high: <b>{ minTemp }</b>C</p>
+              { forecasts.map(forecast => {
+                return (
+                  <div>forecast.date</div> 
+                )
+              })}
+            </div>
+          )
+        })
+
+        }
 
       </div> 
     )
@@ -77,12 +79,12 @@ export default function app ({DOM, HTTP}) {
     };
   });
 
-  weather$.subscribe(x => console.log(x));
-  let res$ = HTTP.filter(re$ => {
-    return re$
-  }).mergeAll();
-  
-  res$.subscribe(x => console.log(x));
+  //weather$.subscribe(x => console.log(x));
+  //let res$ = HTTP.filter(re$ => {
+  //  return re$
+  //}).mergeAll();
+  //
+  //res$.subscribe(x => console.log(x));
 
   let actions = intent(DOM);
   let state$ = model(actions);
