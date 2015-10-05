@@ -24,12 +24,12 @@ function renderCity(city) {
 };
 
 function view(state$) {
-  return state$.map(({minTemp, maxCloud, maxDays, filteredCities}) => {
+  return state$.map(({minTemp, maxCloud, maxDays, minDays, filteredCities}) => {
     return (
       <div>
 
         <label>Forecast from:</label>
-        <select id="forecastfrom">
+        <select id="forecastFrom">
           <option value="1">today</option>
           <option value="2">tomorrow</option>
           <option value="3">+2 days</option>
