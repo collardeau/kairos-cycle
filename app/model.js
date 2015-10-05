@@ -4,12 +4,22 @@ let Ob$ = Rx.Observable;
 let 
   bcnReq = require('json!../sample-data/barcelona.json'),
   berReq = require('json!../sample-data/berlin.json'),
-  lonReq = require('json!../sample-data/london.json');
+  lonReq = require('json!../sample-data/london.json'),
+  miaReq = require('json!../sample-data/miami.json'),
+  nicReq = require('json!../sample-data/nice.json'),
+  nycReq = require('json!../sample-data/newyork.json'),
+  porReq = require('json!../sample-data/porto.json'),
+  sanReq = require('json!../sample-data/sanfrancisco.json');
 
 let 
   bcnRe$ = Ob$.just(bcnReq).delay(2400),
   berRe$ = Ob$.just(berReq).delay(1200),
-  lonRe$ = Ob$.just(lonReq).delay(800);
+  lonRe$ = Ob$.just(lonReq).delay(800),
+  miaRe$ = Ob$.just(miaReq).delay(1700),
+  nicRe$ = Ob$.just(nicReq).delay(250),
+  nycRe$ = Ob$.just(nycReq).delay(250),
+  porRe$ = Ob$.just(porReq).delay(700),
+  sanRe$ = Ob$.just(sanReq).delay(1500);
 
 export default function model(actions){ 
 
@@ -34,10 +44,15 @@ export default function model(actions){
         bcnRe$.startWith(null),
         berRe$.startWith(null),
         lonRe$.startWith(null),
+        miaRe$.startWith(null),
+        nicRe$.startWith(null),
+        nycRe$.startWith(null),
+        porRe$.startWith(null),
+        sanRe$.startWith(null),
   
         // combine to make sieved responses stream 
   
-        (bar, ber, lon) => [bar, ber, lon]
+        (bar, ber, lon, mia, nic, nyc, por, san) => [bar, ber, lon, mia, nic, nyc, por, san]
   
       ).map(cities => {
   
