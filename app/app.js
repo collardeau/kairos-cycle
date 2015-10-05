@@ -24,14 +24,34 @@ function renderCity(city) {
 };
 
 function view(state$) {
-  return state$.map(({minTemp, maxCloud, filteredCities}) => {
+  return state$.map(({minTemp, maxCloud, maxDays, filteredCities}) => {
     return (
       <div>
-        <labeled-slider 
-          key = {3} id="maxDays" label="Max Day Forecast"  mea="days"
-          initial = {4} min="1" max="7"
-        />
-        <labeled-slider 
+
+        <label>Forecast from:</label>
+        <select id="forecastfrom">
+          <option value="1">today</option>
+          <option value="2">tomorrow</option>
+          <option value="3">+2 days</option>
+          <option value="4">+3</option>
+          <option value="5">+4</option>
+          <option value="6">+5</option>
+          <option value="7">+6</option>
+        </select>
+
+
+        <label>until:</label>
+        <select id="forecastUntil">
+          <option value="1">today</option>
+          <option value="2">tomorrow</option>
+          <option selected value="3">+2 days</option>
+          <option value="4">+3</option>
+          <option value="5">+4</option>
+          <option value="6">+5</option>
+          <option value="7">+6</option>
+        </select>
+
+       <labeled-slider 
           key = {1} id="minTemp" label="Min Temperature" mea="C"
           initial = {minTemp} min="0" max="30"
         />
@@ -68,6 +88,7 @@ export default function app ({DOM, HTTP}) {
   let state$ = model(actions);
   let vtree$ = view(state$);
 
+  state$.subscribe(x => console.log(x));
   return {
     DOM: vtree$,
     HTTP: weather$

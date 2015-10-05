@@ -12,14 +12,10 @@ let
   sanReq = require('json!../sample-data/sanfrancisco.json');
 
 let 
-  bcnRe$ = Ob$.just(bcnReq).delay(2400),
-  berRe$ = Ob$.just(berReq).delay(1200),
-  lonRe$ = Ob$.just(lonReq).delay(800),
-  miaRe$ = Ob$.just(miaReq).delay(1700),
-  nicRe$ = Ob$.just(nicReq).delay(250),
-  nycRe$ = Ob$.just(nycReq).delay(250),
-  porRe$ = Ob$.just(porReq).delay(700),
-  sanRe$ = Ob$.just(sanReq).delay(1500);
+  bcnRe$ = Ob$.just(bcnReq).delay(2400), berRe$ = Ob$.just(berReq).delay(1200),
+  lonRe$ = Ob$.just(lonReq).delay(800), miaRe$ = Ob$.just(miaReq).delay(1700),
+  nicRe$ = Ob$.just(nicReq).delay(250), nycRe$ = Ob$.just(nycReq).delay(250),
+  porRe$ = Ob$.just(porReq).delay(700), sanRe$ = Ob$.just(sanReq).delay(1500);
 
 export default function model(actions){ 
 
@@ -30,6 +26,7 @@ export default function model(actions){
     // user action streams
     changeMinTemp$.startWith(4),
     changeMaxCloud$.startWith(100),
+    changeMaxDays$.startWith("3"),
 
     // api data prettied up with only forecast days
     
@@ -41,14 +38,9 @@ export default function model(actions){
   
         // each raw response stream
   
-        bcnRe$.startWith(null),
-        berRe$.startWith(null),
-        lonRe$.startWith(null),
-        miaRe$.startWith(null),
-        nicRe$.startWith(null),
-        nycRe$.startWith(null),
-        porRe$.startWith(null),
-        sanRe$.startWith(null),
+        bcnRe$.startWith(null), berRe$.startWith(null), lonRe$.startWith(null),
+        miaRe$.startWith(null), nicRe$.startWith(null), nycRe$.startWith(null),
+        porRe$.startWith(null), sanRe$.startWith(null),
   
         // combine to make sieved responses stream 
   
@@ -72,7 +64,7 @@ export default function model(actions){
       }).startWith([]),
   
     // selected days to forecast stream
-    changeMaxDays$.startWith(7),
+    changeMaxDays$.startWith("3"),
   
     // combine to make stream with only selected days to forecast
     (cities, maxDays) => {
@@ -111,14 +103,15 @@ export default function model(actions){
 
     // combine ready cities and filters
 
-    (minTemp, maxCloud, cities) => ({
+    (minTemp, maxCloud, maxDays, cities) => ({
       filteredCities: cities.filter(city => {
         if(!city) return null;
         return city.minTemp > minTemp 
         && city.maxCloud < maxCloud;
       }),
       minTemp,
-      maxCloud
+      maxCloud,
+      maxDays
     })
 
   );
