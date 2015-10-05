@@ -14,6 +14,7 @@ function renderCity(city) {
   let { name, maxCloud, minTemp, forecasts } = city;
   return (
     <div>
+      <button id='load'>Refresh</button>
       <h3>{name}</h3>
       <p> max cloud: <b>{ maxCloud }</b></p>
       <p> min temp: <b>{ minTemp }</b>C</p>
@@ -45,14 +46,31 @@ function view(state$) {
   });
 }
 
-export default function app ({DOM}) {
+export default function app ({DOM, HTTP}) {
+
+  const URL = 'http://jsonplaceholder.typicode.com/users/';
+  let weather$ = DOM.select('#load').events('click')
+  .map(() => {
+    return {
+      url: URL + "2",
+      method: 'GET'
+    };
+  });
+
+  weather$.subscribe(x => console.log(x));
+  let res$ = HTTP.filter(re$ => {
+    return re$
+  }).mergeAll();
+  
+  res$.subscribe(x => console.log(x));
 
   let actions = intent(DOM);
   let state$ = model(actions);
   let vtree$ = view(state$);
 
   return {
-    DOM: vtree$
+    DOM: vtree$,
+    HTTP: weather$
   };
 }
 

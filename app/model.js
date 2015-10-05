@@ -94,7 +94,7 @@ export default function model(actions){
   
   }).startWith([]),
 
-    // combine cities and filters
+    // combine ready cities and filters
 
     (minTemp, maxCloud, cities) => ({
       filteredCities: cities.filter(city => {
