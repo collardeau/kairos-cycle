@@ -48,11 +48,11 @@ function view(state$) {
 
 export default function app ({DOM, HTTP}) {
 
-  const URL = 'http://jsonplaceholder.typicode.com/users/';
+  const URL = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=berlin&units=metric&cnt=7';
   let weather$ = DOM.select('#load').events('click')
   .map(() => {
     return {
-      url: URL + "2",
+      url: URL,
       method: 'GET'
     };
   });
