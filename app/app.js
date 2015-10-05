@@ -12,12 +12,12 @@ function renderForecast(forecast){
 function renderCity(city) {
   if (!city) { return <div>Loading</div> }
   let { name, maxCloud, minTemp, forecasts } = city;
+  //<button id='load'>Refresh</button>
   return (
     <div>
-      <button id='load'>Refresh</button>
       <h3>{name}</h3>
-      <p> max cloud: <b>{ maxCloud }</b></p>
-      <p> min temp: <b>{ minTemp }</b>C</p>
+      <p> maximum cloud coverage: <b>{ maxCloud }</b>%</p>
+      <p> minimum day high: <b>{ minTemp }</b>C</p>
       { forecasts.map(forecast => renderForecast(forecast))}
     </div>
   )
@@ -52,11 +52,11 @@ function view(state$) {
         </select>
 
        <labeled-slider 
-          key = {1} id="minTemp" label="Min Temperature" mea="C"
+          key = {1} id="minTemp" label="Min High" mea="C"
           initial = {minTemp} min="0" max="30"
         />
         <labeled-slider 
-          key = {2} id="maxCloud" label="Max Cloud Coverage"  mea="%"
+          key = {2} id="maxCloud" label="Max Clouds"  mea="%"
           initial = {maxCloud} min="0" max="100"
         />
         { filteredCities.map(city => renderCity(city) ) }
