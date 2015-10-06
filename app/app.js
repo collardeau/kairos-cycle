@@ -5,8 +5,17 @@ import model from './model'
 
 function view(state$) {
   return state$.map(({minTemp, maxCloud, maxDays, minDays, filteredCities}) => {
+    
+    let styles = {
+      'app': {
+        'margin': '0 auto',
+        'width': '80%' 
+      } 
+    }
+
+
     return (
-      <div>
+      <div style={styles.app}>
 
         <label>Forecast from:</label>
         <select id="forecastFrom">
