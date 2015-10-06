@@ -3,6 +3,7 @@ import {hJSX} from '@cycle/dom';
 import renderFilters from './views/filters';
 
 export default function view(state$) {
+
   return state$.map(({minTemp, maxCloud, maxDays, minDays, filteredCities}) => {
     
     let styles = {
@@ -16,7 +17,7 @@ export default function view(state$) {
 
       <div style={styles.app}>
 
-        { renderFilters(state$) }       
+        { renderFilters({maxDays, minDays, maxCloud, minTemp }) }       
 
         { filteredCities.map(city => {
 
