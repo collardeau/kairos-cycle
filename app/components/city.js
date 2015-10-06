@@ -15,8 +15,9 @@ export default function city(responses) {
           'width': '100px',
           'flex': '0 1 25%',
           'paddingBottom': '1.3em',
-          'backgroundColor': 'lightblue',
-          'textAlign': 'center'
+          'textAlign': 'center',
+          'border': '1px solid',
+          'display': 'none'
         },
         'date': {
           'textAlign': 'center' 
@@ -49,26 +50,38 @@ export default function city(responses) {
       let sty = {
         'header': {
           'backgroundColor': 'lightgoldenrodyellow',
-          'padding': '0.5em  0 1.3em 1.3em',
+          'padding': '0.1em 0 1.3em 1.3em',
+          'borderRadius': '25px',
         },
         'container': {
-          'marginBottom': '1.3em'
+          'marginTop': '0.8em',
         },
         'forecasts': {
           'display': 'flex',
           'flexWrap': 'wrap'
+        },
+        'half': {
+          'width': '50%'
         }
       };
 
       return (
         <div style={sty.container}>
           <header style={sty.header}>
-            <h3>{name}</h3>
-            <span> 
-              From date A to date B<br />
-              max cloud: <b>{ maxCloud }</b>% min day high: <b>{ minTemp }</b>C
-            </span>
-          </header>
+            <h3 style={{ 'marginBottom': '0.3em'}}>{name}</h3>
+            <table style={{'width': '66%', 'marginBottom': '0.5em'}}>
+              <tr style={{'height': '2.1em'}}>
+                <td>Lowest Day High</td>
+                <td>{ minTemp }C</td>
+              </tr>
+              <tr style={{'width': '2.1em'}}>
+                <td>Max Cloud Coverage</td>
+                <td>{ maxCloud }%</td>
+              </tr>
+            </table>
+            <small style={{'color': '#777'}}>Oct 6 to Oct 10</small>
+            <span style={{'float': 'right', 'marginRight': '0.8em'}}>...</span>
+         </header>
           <div style={sty.forecasts}>
             { forecasts.map(forecast => renderDetails(Ob$.just(forecast))) }
           </div>

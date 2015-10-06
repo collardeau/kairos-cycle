@@ -29,14 +29,15 @@ export default function labeledSlider(responses) {
       let value = state.value;
       return (
         <div>
-          <input 
+          <input style={{'marginRight': '0.8em', 'width': '100%'}}
             className='slider' 
             type='range' 
             max={max} 
             min={min} 
             value={value} 
           />
-          { value } { mea } { label }
+          <br />
+          <b>{ value }{ mea }</b>
         </div>      
       );
     });
