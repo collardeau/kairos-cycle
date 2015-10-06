@@ -60,7 +60,7 @@ export default function model(actions){
               let date = new Date(forecast.dt * 1000);
               return {
                 date: date.getDate() + ' October',
-                minTemp: forecast.temp.min,
+                minTemp: Math.round(forecast.temp.min),
                 maxCloud: forecast.clouds,
               }
             })
