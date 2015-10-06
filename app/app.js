@@ -10,61 +10,65 @@ function view(state$) {
       'app': {
         'margin': '0 auto',
         'width': '80%' 
-      } 
+      },
+      'filters': {
+        'marginBottom': '1.3em',
+        'fontSize': '1.3em' 
+      }
     }
-
 
     return (
       <div style={styles.app}>
+        <div style={styles.filters}>
+          <label>Forecast from:</label>
+          <select id="forecastFrom">
+            <option value="1">today</option>
+            <option value="2">tomorrow</option>
+            <option value="3">+2 days</option>
+            <option value="4">+3</option>
+            <option value="5">+4</option>
+            <option value="6">+5</option>
+            <option value="7">+6</option>
+          </select>
 
-        <label>Forecast from:</label>
-        <select id="forecastFrom">
-          <option value="1">today</option>
-          <option value="2">tomorrow</option>
-          <option value="3">+2 days</option>
-          <option value="4">+3</option>
-          <option value="5">+4</option>
-          <option value="6">+5</option>
-          <option value="7">+6</option>
-        </select>
 
-
-        <label>until:</label>
-        <select id="forecastUntil">
-          <option value="1">today</option>
-          <option value="2">tomorrow</option>
-          <option selected value="3">+2 days</option>
-          <option value="4">+3</option>
-          <option value="5">+4</option>
-          <option value="6">+5</option>
-          <option value="7">+6</option>
-        </select>
+          <label>until:</label>
+          <select id="forecastUntil">
+            <option value="1">today</option>
+            <option value="2">tomorrow</option>
+            <option selected value="3">+2 days</option>
+            <option value="4">+3</option>
+            <option value="5">+4</option>
+            <option value="6">+5</option>
+            <option value="7">+6</option>
+          </select>
 
        <labeled-slider 
-          key = {1} id="minTemp" label="Min High" mea="C"
-          initial = {minTemp} min="0" max="30"
-        />
-        <labeled-slider 
-          key = {2} id="maxCloud" label="Max Clouds"  mea="%"
-          initial = {maxCloud} min="0" max="100"
-        />
-
-
-        { 
-
-        filteredCities.map(city => {
-
-          if (!city) { return <div>Loading</div> }
-          let { name, maxCloud, minTemp, forecasts } = city;
-
-          return <city name={name} 
-            maxCloud={ maxCloud } 
-            minTemp={ minTemp } 
-            forecasts = { forecasts }
+            key = {1} id="minTemp" label="Min High" mea="C"
+            initial = {minTemp} min="0" max="30"
+          />
+          <labeled-slider 
+            key = {2} id="maxCloud" label="Max Clouds"  mea="%"
+            initial = {maxCloud} min="0" max="100"
           />
 
-       })
 
+        </div>
+        
+        { 
+
+          filteredCities.map(city => {
+
+            if (!city) { return <div>Loading</div> }
+            let { name, maxCloud, minTemp, forecasts } = city;
+
+            return <city name={name} 
+              maxCloud={ maxCloud } 
+              minTemp={ minTemp } 
+              forecasts = { forecasts }
+            />
+
+          })
         }
 
       </div> 

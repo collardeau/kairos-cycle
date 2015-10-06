@@ -12,16 +12,30 @@ export default function city(responses) {
 
       let sty = {
         'forecast': {
-          'flex': '1 0 30%',
-          'flexWrap': 'wrap',
+          'width': '100px',
+          'flex': '0 1 25%',
+          'paddingBottom': '1.3em',
+          'backgroundColor': 'lightblue',
+          'textAlign': 'center'
+        },
+        'date': {
+          'textAlign': 'center' 
         }
      };
 
       return (
         <span style={sty.forecast }>
-          <p>{date}
-            <br />High: { minTemp }, Cloud Coverage: { maxCloud }
-          </p>
+          <h5 style={sty.date}>{date}</h5>
+            <table>
+              <tr>
+                <td>High</td>
+                <td>{ minTemp }</td>
+              </tr>
+              <tr>
+                <td>cloud</td>
+                <td>{ maxCloud }</td>
+              </tr>
+           </table>
         </span>    
       );
     }) 
@@ -33,22 +47,29 @@ export default function city(responses) {
       let { forecasts, name, maxCloud, minTemp } = state;
 
       let sty = {
-        'border': {
-          'border': '1px solid' 
+        'header': {
+          'backgroundColor': 'lightgoldenrodyellow',
+          'padding': '0.5em  0 1.3em 1.3em',
         },
         'container': {
+          'marginBottom': '1.3em'
+        },
+        'forecasts': {
           'display': 'flex',
           'flexWrap': 'wrap'
         }
       };
 
       return (
-        <div>
-          <header style={sty.border}>
+        <div style={sty.container}>
+          <header style={sty.header}>
             <h3>{name}</h3>
-            <p> max cloud: <b>{ maxCloud }</b>%<br />min day high: <b>{ minTemp }</b>C</p>
+            <span> 
+              From date A to date B<br />
+              max cloud: <b>{ maxCloud }</b>% min day high: <b>{ minTemp }</b>C
+            </span>
           </header>
-          <div style={sty.container}>
+          <div style={sty.forecasts}>
             { forecasts.map(forecast => renderDetails(Ob$.just(forecast))) }
           </div>
         </div>
