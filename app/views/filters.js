@@ -28,7 +28,7 @@ export default function renderFilters({minTemp, maxCloud, maxDays, minDays}) {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>Show me forecasts</h2>
+      <h2 style={styles.header}>Show Me Weather Forecasts</h2>
       <div style={styles.filters}>
         <span style={styles.half}>
          <label style={styles.padRight}>From</label>
