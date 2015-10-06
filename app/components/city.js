@@ -30,14 +30,11 @@ export default function city(responses) {
 
       let sty = {
         'forecast': {
-          'width': '100px',
-          'flex': '0 1 25%',
-          'paddingBottom': '1.3em',
-          'textAlign': 'center',
-          'border': '1px solid'
+          'flex': '0 0 20%'
         },
         'date': {
-          'textAlign': 'center' 
+          //'textAlign': 'center'
+          'margin': '0.2em'
         }
       };
 
@@ -50,8 +47,13 @@ export default function city(responses) {
               <td>{ minTemp }</td>
             </tr>
             <tr>
-              <td>cloud</td>
-              <td>{ maxCloud }</td>
+              <td>Low</td>
+              <td>0</td>
+            </tr>
+ 
+            <tr>
+              <td>Sunny</td>
+              <td>{ maxCloud }%</td>
             </tr>
           </table>
         </span>    
@@ -64,17 +66,18 @@ export default function city(responses) {
     let { forecasts, name, maxCloud, minTemp } = state.props;
 
     let sty = {
+      'container': {
+        'marginTop': '0.8em',
+      },
       'header': {
         'backgroundColor': 'lightgoldenrodyellow',
         'padding': '0.1em 0 1.3em 1.3em',
         'borderRadius': '25px',
       },
-      'container': {
-        'marginTop': '0.8em',
-      },
-      'forecasts': {
+     'forecasts': {
         'display': state.toggle,
         'flexWrap': 'wrap',
+        'justifyContent': 'space-around'
       },
       'half': {
         'width': '50%'
@@ -87,15 +90,15 @@ export default function city(responses) {
           <h3 style={{ 'marginBottom': '0.3em'}}>{name}</h3>
           <table style={{'width': '66%', 'marginBottom': '0.5em'}}>
             <tr style={{'height': '2.1em'}}>
-              <td>Lowest Day High</td>
+              <td>Min High</td>
               <td>{ minTemp }C</td>
             </tr>
             <tr style={{'width': '2.1em'}}>
-              <td>Max Cloud Coverage</td>
+              <td>Min Sun</td>
               <td>{ maxCloud }%</td>
             </tr>
           </table>
-          <small style={{'color': '#777'}}>Oct 6 to Oct 10</small>
+          <small style={{'color': '#777'}}>between Oct 6 and Oct 10</small>
           <span id='toggle'style={{'float': 'right', 'marginRight': '0.8em'}}>...</span>
        </header>
         <div style={sty.forecasts}>

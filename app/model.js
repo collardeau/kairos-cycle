@@ -24,8 +24,8 @@ export default function model(actions){
   return Ob$.combineLatest(
 
     // user action streams
-    changeMinTemp$.startWith(4),
-    changeMaxCloud$.startWith(100),
+    changeMinTemp$.startWith(0),
+    changeMaxCloud$.startWith(0),
     changeMaxDays$.startWith("3"),
     changeMinDays$.startWith("1"),
 
@@ -61,7 +61,7 @@ export default function model(actions){
               return {
                 date: date.getDate() + ' October',
                 minTemp: Math.round(forecast.temp.min),
-                maxCloud: forecast.clouds,
+                maxCloud: 100 - forecast.clouds,
               }
             })
           }
@@ -99,8 +99,8 @@ export default function model(actions){
           return next.minTemp < min ? next.minTemp : min;      
         }, forecasts[0].minTemp),
         maxCloud: forecasts.reduce((max, next) => {
-          return next.maxCloud > max ? next.maxCloud : max;      
-        }, forecasts[0].maxCloud)
+          return next.maxCloud < max ? next.maxCloud : max;      
+        }, 100 - forecasts[0].maxCloud)
       }
   
     });
@@ -113,7 +113,7 @@ export default function model(actions){
       filteredCities: cities.filter(city => {
         if(!city) return null;
         return city.minTemp > minTemp 
-        && city.maxCloud < maxCloud;
+        && city.maxCloud > maxCloud;
       }),
       minTemp,
       maxCloud,

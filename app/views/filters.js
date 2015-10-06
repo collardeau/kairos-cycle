@@ -47,18 +47,18 @@ export default function renderFilters({minTemp, maxCloud, maxDays, minDays}) {
           <option value="7">+6</option>
         </select>
         </span>
-        <span style = {styles.half}>Lowest Day High:</span>
+        <span style = {styles.half}>At least this <b>temperature</b> every day:</span>
         <div style={styles.half}>
         <labeled-slider 
           key = {1} id="minTemp" label="" mea="C"
           initial = {minTemp} min="0" max="30"
         />
         </div>
-        <span style={styles.half}>Maximum cloud coverage:</span>
+        <span style={styles.half}>At least this amount of <b>sun</b> each day:</span>
         <div style={styles.half}>
         <labeled-slider 
           key = {2} id="maxCloud" label=""  mea="%"
-          initial = {maxCloud} min="0" max="100"
+          initial = {maxCloud} min="0" max="50"
         />
         </div>
       </div>
