@@ -34,12 +34,8 @@ export default function renderForecast(state$) {
               <td>{ sun }%</td>
             </tr>
             <tr>
-              <td>H</td>
-              <td>{ humidity }%</td>
-            </tr>
-             <tr>
               <td>Wind</td>
-              <td>{ wind } m/s</td>
+              <td>{ wind }</td>
             </tr>
  
           </table>

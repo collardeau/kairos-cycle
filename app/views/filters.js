@@ -5,12 +5,11 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
 
  return (
     <div style={styles.container}>
-      <h2 style={styles.header}>Find your Ideal Weather</h2>
+      <h2 style={styles.header}>Find Better Weather</h2>
       <div style={styles.filters}>
         <span style={styles.half}>
-         <label style={styles.padRight}>Starting</label>
         <select id="forecastFrom">
-          <option value="0">tomorrow</option>
+          <option value="0">Tomorrow</option>
           <option value="1">day after tomorrow</option>
         </select>
         </span>
@@ -24,14 +23,21 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
           <option value="5">5 days</option>
         </select>
         </span>
-        <span style = {styles.half}>At least this <b>temperature</b> each day:</span>
+        <span style = {styles.half}>
+          <b>Temperature</b>:
+          <br /><small>at least this <b>warm</b> each day</small>
+        </span>
         <div style={styles.half}>
         <labeled-slider 
-          key = {1} id="minHigh" label="" mea="C"
+          key = {1} id="minHigh" label="" mea="&ordm;C"
           initial = {selectedMinHigh} min="0" max="30"
         />
         </div>
-        <span style={styles.half}>At least this amount of <b>sun</b> each day:</span>
+        <span style = {styles.half}>
+          <b>Sunny</b>:
+          <br /><small>at least this <b>clear</b> each day</small>
+        </span>
+ 
         <div style={styles.half}>
         <labeled-slider 
           key = {2} id="minSun" label=""  mea="%"
@@ -45,10 +51,10 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
 
 let styles = {
  'container': {
-   'border': '5px dotted mistyrose',
-   'padding': '0 0.5em',
+   'padding': '0.5em',
    'borderRadius': '25px',
-   'marginTop': '0.5em'
+   'marginTop': '0.5em',
+   'backgroundColor': 'lightgoldenrodyellow'
  },
  'header': {
    'textAlign': 'center'
@@ -59,7 +65,8 @@ let styles = {
  },
  'half': {
    'flex': '1 0 40%',
-   'marginBottom': '1.3em'
+   'marginBottom': '1.3em',
+   'padding': '0 0.3em'
  },
  'padRight': {
     'paddingRight': '1.3em' 

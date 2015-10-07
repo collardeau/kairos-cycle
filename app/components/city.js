@@ -27,62 +27,16 @@ export default function city(responses) {
 
    return state$.map(state => {
 
-    let { forecasts, name, minSun, minHigh, timespan } = state.props;
-
-    let sty = {
-      'container': {
-        'marginTop': '0.8em',
-      },
-      'header': {
-        'backgroundColor': 'lightgoldenrodyellow',
-        'padding': '0.1em 0 1.3em 1.3em',
-        'borderRadius': '25px',
-      },
-      'name': {
-        'marginBotton': '0.3em'      
-      },
-      'table': {
-        'width': '66%',
-        'marginBottom': '0.5em'      
-      },
-     'forecasts': {
-        'display': state.toggle,
-        'flexWrap': 'wrap',
-        'justifyContent': 'space-around'
-      },
-      'half': {
-        'width': '50%'
-      },
-      'dim': {
-        'color': '#777' 
-      },
-      'moreBtn': {
-        'float': 'right',
-        'marginRight': '0.8em'
-      }
-    };
+    let { forecasts, name, minSun, minLow, maxHigh, minHigh, timespan } = state.props;
 
     return (
       <div style={sty.container}>
-        <header style={sty.header}>
-          <h3 style={sty.name}>{name}</h3>
-          <small style={sty.dim}>{ timespan }</small>
-          <table style={sty.table}>
-            <tr style={{'height': '2.1em'}}>
-              <td>Min High</td>
-              <td>{ minHigh }C</td>
-            </tr>
-            <tr style={{'width': '2.1em'}}>
-              <td>Min Sun</td>
-              <td>{ minSun }%</td>
-            </tr>
-          </table>
-          <span id='toggle'style={sty.moreBtn}>...</span>
-       </header>
-        <div style={sty.forecasts}>
-          { forecasts.map(forecast => renderForecast(Ob$.just(forecast))) }
-        </div>
-      </div>
+        <h3 style={sty.name}>{name}</h3>
+        <span style={sty.dim}>From { timespan }</span>
+        <p>Highs between <b>{ minHigh }&ordm;C</b> and <b>{ maxHigh }&ordm;C</b>.</p>
+        <p>Skies at least <b>{minSun}% clear</b> each day.</p>
+        <p>The lowest temp expected is <b> { minLow } &ordm;C</b>.</p>
+     </div>
     );
   });
 }
@@ -95,5 +49,25 @@ export default function city(responses) {
     DOM: vtree$
   }
 }
+
+let sty = {
+  'container': {
+    'marginTop': '0.8em',
+    'backgroundColor': 'lightblue',
+    'padding': '0.1em 0 1.3em 1.3em',
+    'borderRadius': '25px',
+  },
+  'header': {
+    'backgroundColor': 'lightgoldenrodyellow',
+    'padding': '0.1em 0 1.3em 1.3em',
+    'borderRadius': '25px',
+  },
+  'name': {
+    'marginBotton': '0.3em'      
+  },
+  'dim': {
+    'color': '#777' 
+  }
+};
 
 

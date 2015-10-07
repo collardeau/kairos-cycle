@@ -2,7 +2,6 @@ import {Rx} from '@cycle/core';
 let Ob$ = Rx.Observable;
 
 let 
-  banReq = require('json!../sample-data/bangkok.json'),
   bcnReq = require('json!../sample-data/barcelona.json'),
   berReq = require('json!../sample-data/berlin.json'),
   copReq = require('json!../sample-data/copenhagen.json'),
@@ -19,7 +18,6 @@ let
   tokReq = require('json!../sample-data/tokyo.json');
 
 let 
-  banRe$ = Ob$.just(banReq).delay(1200),
   bcnRe$ = Ob$.just(bcnReq).delay(2400), 
   berRe$ = Ob$.just(berReq).delay(1200),
   copRe$ = Ob$.just(copReq).delay(500),
@@ -48,8 +46,8 @@ export default function model(actions){
   return Ob$.combineLatest(
 
     // user action streams
-    changeMinHigh$.startWith(0),
-    changeMinSun$.startWith(0),
+    changeMinHigh$.startWith(10),
+    changeMinSun$.startWith(50),
     changeStartDay$.startWith("0"),
     changeDuration$.startWith("3"),
 
@@ -63,7 +61,6 @@ export default function model(actions){
   
         // each raw response stream
   
-        banRe$.startWith(null), 
         bcnRe$.startWith(null), 
         berRe$.startWith(null), 
         copRe$.startWith(null), 
@@ -81,7 +78,7 @@ export default function model(actions){
   
         // combine to make sieved responses stream 
   
-        (ban, bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, san, sfc, tok) => [ban, bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, san, sfc, tok]
+        (bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, san, sfc, tok) => [bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, san, sfc, tok]
   
       ).map(cities => {
   
@@ -140,6 +137,12 @@ export default function model(actions){
         minHigh: forecasts.reduce((min, next) => {
           return next.high < min ? next.high : min;      
         }, forecasts[0].high),
+        maxHigh: forecasts.reduce((max, next) => {
+          return next.high > max ? next.high : max;      
+        }, forecasts[0].high),
+        minLow: forecasts.reduce((min, next) => {
+          return next.low < min ? next.low : min;      
+        }, forecasts[0].low),
         minSun: forecasts.reduce((min, next) => {
           return next.sun < min ? next.sun : min;      
         }, forecasts[0].sun),
