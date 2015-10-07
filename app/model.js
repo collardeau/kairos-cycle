@@ -19,7 +19,7 @@ let
 
 export default function model(actions){ 
 
-  let { changeMaxDays$, changeMinDays$, changeMinSun$, changeMinHigh$ } = actions;
+  let { changeMaxDays$, changeStartDay$, changeMinSun$, changeMinHigh$ } = actions;
 
   // date helper
   let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -33,7 +33,7 @@ export default function model(actions){
     changeMinHigh$.startWith(0),
     changeMinSun$.startWith(0),
     changeMaxDays$.startWith("3"),
-    changeMinDays$.startWith("0"),
+    changeStartDay$.startWith("0"),
 
     // api data prettied up with only forecast days
     
@@ -80,15 +80,15 @@ export default function model(actions){
   
     // selected days to forecast stream
     changeMaxDays$.startWith("3"),
-    changeMinDays$.startWith("0"),
+    changeStartDay$.startWith("0"),
   
     // combine to make stream with only selected days to forecast
-    (cities, maxDays, minDays) => {
+    (cities, maxDays, startDay) => {
       return cities.map(city => {
         if (!city) return null;
        return {
           ...city,
-          forecasts: city.forecasts.slice(+minDays, +minDays + +maxDays),
+          forecasts: city.forecasts.slice(+startDay, +startDay + +maxDays),
         };    
       });
     }
@@ -122,7 +122,7 @@ export default function model(actions){
 
     // combine ready cities and filters
 
-    (selectedMinHigh, selectedMinSun, maxDays, minDays, cities) => ({
+    (selectedMinHigh, selectedMinSun, maxDays, startDay, cities) => ({
       filteredCities: cities.filter(city => {
         if(!city) return null;
         return city.minHigh > selectedMinHigh
@@ -130,7 +130,7 @@ export default function model(actions){
       }),
       selectedMinHigh,
       selectedMinSun,
-      minDays,
+      startDay,
       maxDays
     })
 

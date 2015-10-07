@@ -8,7 +8,7 @@ export default function intent(DOM){
       .debounce(10),
    changeMaxDays$ : DOM.select('#forecastUntil').events('change')
       .map(e => e.target.value),
-   changeMinDays$ : DOM.select('#forecastFrom').events('change')
+   changeStartDay$ : DOM.select('#forecastFrom').events('change')
       .map(e => e.target.value)
   };
 }
