@@ -69,7 +69,7 @@ export default function model(actions){
                 desc: forecast.weather[0].description,
                 high: Math.round(forecast.temp.max),
                 low: Math.round(forecast.temp.min),
-                maxCloud: 100 - forecast.clouds, // min sun
+                sun: 100 - forecast.clouds, // min sun
                 humidity: forecast.humidity,
                 wind: Math.round(forecast.speed)
               }
@@ -111,8 +111,8 @@ export default function model(actions){
           return next.high < min ? next.high : min;      
         }, forecasts[0].high),
         maxCloud: forecasts.reduce((max, next) => {
-          return next.maxCloud < max ? next.maxCloud : max;      
-        }, forecasts[0].maxCloud),
+          return next.sun < max ? next.sun : max;      
+        }, forecasts[0].sun),
         timespan: startDate + ' to ' + endDate
       }
   

@@ -26,7 +26,7 @@ export default function city(responses) {
 
   function renderDetails(state$) {
     return state$.map(state => {
-      let { date, desc, high, low, humidity, maxCloud, wind } = state;
+      let { date, desc, high, low, humidity, sun, wind } = state;
 
       let sty = {
         'forecast': {
@@ -53,7 +53,7 @@ export default function city(responses) {
             </tr>
             <tr>
               <td>Sun</td>
-              <td>{ maxCloud }%</td>
+              <td>{ sun }%</td>
             </tr>
             <tr>
               <td>H</td>
