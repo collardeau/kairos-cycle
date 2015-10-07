@@ -72,7 +72,7 @@ export default function city(responses) {
  
   return state$.map(state => {
 
-    let { forecasts, name, maxCloud, minHigh, timespan } = state.props;
+    let { forecasts, name, minSun, minHigh, timespan } = state.props;
 
     let sty = {
       'container': {
@@ -105,7 +105,7 @@ export default function city(responses) {
             </tr>
             <tr style={{'width': '2.1em'}}>
               <td>Min Sun</td>
-              <td>{ maxCloud }%</td>
+              <td>{ minSun }%</td>
             </tr>
           </table>
           <span id='toggle'style={{'float': 'right', 'marginRight': '0.8em'}}>...</span>

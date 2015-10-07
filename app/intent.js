@@ -3,7 +3,7 @@ export default function intent(DOM){
     changeMinHigh$ : DOM.select('#minHigh').events('newValue')
       .map(e => e.detail)
       .debounce(10),
-    changeMaxCloud$ : DOM.select('#maxCloud').events('newValue')
+    changeMinSun$ : DOM.select('#minSun').events('newValue')
       .map(e => e.detail)
       .debounce(10),
    changeMaxDays$ : DOM.select('#forecastUntil').events('change')

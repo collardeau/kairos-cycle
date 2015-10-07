@@ -19,7 +19,7 @@ let
 
 export default function model(actions){ 
 
-  let { changeMaxDays$, changeMinDays$, changeMaxCloud$, changeMinHigh$ } = actions;
+  let { changeMaxDays$, changeMinDays$, changeMinSun$, changeMinHigh$ } = actions;
 
   // date helper
   let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -31,7 +31,7 @@ export default function model(actions){
 
     // user action streams
     changeMinHigh$.startWith(0),
-    changeMaxCloud$.startWith(0),
+    changeMinSun$.startWith(0),
     changeMaxDays$.startWith("3"),
     changeMinDays$.startWith("0"),
 
@@ -110,8 +110,8 @@ export default function model(actions){
         minHigh: forecasts.reduce((min, next) => {
           return next.high < min ? next.high : min;      
         }, forecasts[0].high),
-        maxCloud: forecasts.reduce((max, next) => {
-          return next.sun < max ? next.sun : max;      
+        minSun: forecasts.reduce((min, next) => {
+          return next.sun < min ? next.sun : min;      
         }, forecasts[0].sun),
         timespan: startDate + ' to ' + endDate
       }
@@ -122,14 +122,14 @@ export default function model(actions){
 
     // combine ready cities and filters
 
-    (minHigh, maxCloud, maxDays, minDays, cities) => ({
+    (minHigh, minSun, maxDays, minDays, cities) => ({
       filteredCities: cities.filter(city => {
         if(!city) return null;
         return city.minHigh > minHigh
-        && city.maxCloud > maxCloud;
+        && city.minSun > minSun;
       }),
       minHigh,
-      maxCloud,
+      minSun,
       minDays,
       maxDays
     })
