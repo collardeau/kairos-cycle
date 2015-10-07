@@ -1,6 +1,7 @@
 /** @jsx hJSX */ 
 import Cycle from '@cycle/core';
 import {hJSX} from '@cycle/dom';
+import renderForecast from '../views/forecast';
 
 let Ob$ = Cycle.Rx.Observable;
 
@@ -24,53 +25,7 @@ export default function city(responses) {
 
  function view(state$){
 
-  function renderDetails(state$) {
-    return state$.map(state => {
-      let { date, desc, high, low, humidity, sun, wind } = state;
-
-      let sty = {
-        'forecast': {
-          'flex': '0 0 20%'
-        },
-        'date': {
-          //'textAlign': 'center'
-          'margin': '0.2em'
-        }
-      };
-
-      return (
-        <span style={sty.forecast }>
-        <h5 style={sty.date}>{date}</h5>
-        <p>{ desc }</p>
-          <table>
-            <tr>
-              <td>High</td>
-              <td>{ high }</td>
-            </tr>
-            <tr>
-              <td>Low</td>
-              <td>{ low }</td>
-            </tr>
-            <tr>
-              <td>Sun</td>
-              <td>{ sun }%</td>
-            </tr>
-            <tr>
-              <td>H</td>
-              <td>{ humidity }%</td>
-            </tr>
-             <tr>
-              <td>Wind</td>
-              <td>{ wind } m/s</td>
-            </tr>
- 
-          </table>
-        </span>    
-        );
-    }) 
-  }
- 
-  return state$.map(state => {
+   return state$.map(state => {
 
     let { forecasts, name, minSun, minHigh, timespan } = state.props;
 
@@ -111,7 +66,7 @@ export default function city(responses) {
           <span id='toggle'style={{'float': 'right', 'marginRight': '0.8em'}}>...</span>
        </header>
         <div style={sty.forecasts}>
-          { forecasts.map(forecast => renderDetails(Ob$.just(forecast))) }
+          { forecasts.map(forecast => renderForecast(Ob$.just(forecast))) }
         </div>
       </div>
     );

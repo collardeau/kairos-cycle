@@ -3,30 +3,7 @@ import {hJSX} from '@cycle/dom';
 
 export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays, minDays}) {
 
-  let styles = {
-   'container': {
-     'border': '5px dotted mistyrose',
-     'padding': '0 0.5em',
-     'borderRadius': '25px',
-     'marginTop': '0.5em'
-   },
-   'header': {
-     'textAlign': 'center'
-   },
-   'filters': {
-     'display': 'flex',
-     'flexWrap': 'wrap'
-   },
-   'half': {
-     'flex': '1 0 40%',
-     'marginBottom': '1.3em'
-   },
-   'padRight': {
-      'paddingRight': '1.3em' 
-   }
-  }
-
-  return (
+ return (
     <div style={styles.container}>
       <h2 style={styles.header}>Find your Ideal Weather</h2>
       <div style={styles.filters}>
@@ -66,3 +43,27 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
   )
 }
 
+let styles = {
+ 'container': {
+   'border': '5px dotted mistyrose',
+   'padding': '0 0.5em',
+   'borderRadius': '25px',
+   'marginTop': '0.5em'
+ },
+ 'header': {
+   'textAlign': 'center'
+ },
+ 'filters': {
+   'display': 'flex',
+   'flexWrap': 'wrap'
+ },
+ 'half': {
+   'flex': '1 0 40%',
+   'marginBottom': '1.3em'
+ },
+ 'padRight': {
+    'paddingRight': '1.3em' 
+ }
+}
+
+ 

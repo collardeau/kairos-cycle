@@ -9,7 +9,7 @@ export default function view(state$) {
     let styles = {
       'app': {
         'margin': '0 auto',
-        'width': '85%' 
+        'width': '90%' 
       }
    }
 
