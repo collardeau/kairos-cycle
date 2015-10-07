@@ -69,7 +69,7 @@ export default function model(actions){
                 desc: forecast.weather[0].description,
                 high: Math.round(forecast.temp.max),
                 low: Math.round(forecast.temp.min),
-                sun: 100 - forecast.clouds, // min sun
+                sun: 100 - forecast.clouds,
                 humidity: forecast.humidity,
                 wind: Math.round(forecast.speed)
               }
@@ -122,14 +122,14 @@ export default function model(actions){
 
     // combine ready cities and filters
 
-    (minHigh, minSun, maxDays, minDays, cities) => ({
+    (selectedMinHigh, selectedMinSun, maxDays, minDays, cities) => ({
       filteredCities: cities.filter(city => {
         if(!city) return null;
-        return city.minHigh > minHigh
-        && city.minSun > minSun;
+        return city.minHigh > selectedMinHigh
+        && city.minSun > selectedMinSun;
       }),
-      minHigh,
-      minSun,
+      selectedMinHigh,
+      selectedMinSun,
       minDays,
       maxDays
     })

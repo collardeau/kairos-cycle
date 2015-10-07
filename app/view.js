@@ -4,7 +4,7 @@ import renderFilters from './views/filters';
 
 export default function view(state$) {
 
-  return state$.map(({minHigh, minSun, maxDays, minDays, filteredCities}) => {
+  return state$.map(({selectedMinHigh, selectedMinSun, maxDays, minDays, filteredCities}) => {
     
     let styles = {
       'app': {
@@ -17,7 +17,7 @@ export default function view(state$) {
 
       <div style={styles.app}>
 
-        { renderFilters({maxDays, minDays, minSun, minHigh }) }       
+        { renderFilters({selectedMinSun, selectedMinHigh, minDays, maxDays }) }       
 
         { filteredCities.map(city => {
 
