@@ -2,20 +2,38 @@ import {Rx} from '@cycle/core';
 let Ob$ = Rx.Observable;
 
 let 
+  banReq = require('json!../sample-data/bangkok.json'),
   bcnReq = require('json!../sample-data/barcelona.json'),
   berReq = require('json!../sample-data/berlin.json'),
+  copReq = require('json!../sample-data/copenhagen.json'),
+  istReq = require('json!../sample-data/istanbul.json'),
   lonReq = require('json!../sample-data/london.json'),
+  madReq = require('json!../sample-data/madrid.json'),
   miaReq = require('json!../sample-data/miami.json'),
   nicReq = require('json!../sample-data/nice.json'),
   nycReq = require('json!../sample-data/newyork.json'),
   porReq = require('json!../sample-data/porto.json'),
-  sanReq = require('json!../sample-data/sanfrancisco.json');
+  romReq = require('json!../sample-data/rome.json'),
+  sanReq = require('json!../sample-data/santiago.json'),
+  sfcReq = require('json!../sample-data/sanfrancisco.json'),
+  tokReq = require('json!../sample-data/tokyo.json');
 
 let 
-  bcnRe$ = Ob$.just(bcnReq).delay(2400), berRe$ = Ob$.just(berReq).delay(1200),
-  lonRe$ = Ob$.just(lonReq).delay(800), miaRe$ = Ob$.just(miaReq).delay(1700),
-  nicRe$ = Ob$.just(nicReq).delay(250), nycRe$ = Ob$.just(nycReq).delay(250),
-  porRe$ = Ob$.just(porReq).delay(700), sanRe$ = Ob$.just(sanReq).delay(1500);
+  banRe$ = Ob$.just(banReq).delay(1200),
+  bcnRe$ = Ob$.just(bcnReq).delay(2400), 
+  berRe$ = Ob$.just(berReq).delay(1200),
+  copRe$ = Ob$.just(copReq).delay(500),
+  istRe$ = Ob$.just(istReq).delay(600),
+  lonRe$ = Ob$.just(lonReq).delay(800), 
+  miaRe$ = Ob$.just(miaReq).delay(1700),
+  nicRe$ = Ob$.just(nicReq).delay(250), 
+  nycRe$ = Ob$.just(nycReq).delay(250),
+  madRe$ = Ob$.just(madReq).delay(100),
+  porRe$ = Ob$.just(porReq).delay(700), 
+  romRe$ = Ob$.just(romReq).delay(100),
+  sanRe$ = Ob$.just(sanReq).delay(1100),
+  sfcRe$ = Ob$.just(sfcReq).delay(2700),
+  tokRe$ = Ob$.just(tokReq).delay(1000);
 
 export default function model(actions){ 
 
@@ -45,13 +63,25 @@ export default function model(actions){
   
         // each raw response stream
   
-        bcnRe$.startWith(null), berRe$.startWith(null), lonRe$.startWith(null),
-        miaRe$.startWith(null), nicRe$.startWith(null), nycRe$.startWith(null),
-        porRe$.startWith(null), sanRe$.startWith(null),
+        banRe$.startWith(null), 
+        bcnRe$.startWith(null), 
+        berRe$.startWith(null), 
+        copRe$.startWith(null), 
+        istRe$.startWith(null), 
+        lonRe$.startWith(null),
+        madRe$.startWith(null),
+        miaRe$.startWith(null), 
+        nicRe$.startWith(null), 
+        nycRe$.startWith(null),
+        porRe$.startWith(null), 
+        romRe$.startWith(null),
+        sanRe$.startWith(null),
+        sfcRe$.startWith(null), 
+        tokRe$.startWith(null),
   
         // combine to make sieved responses stream 
   
-        (bar, ber, lon, mia, nic, nyc, por, san) => [bar, ber, lon, mia, nic, nyc, por, san]
+        (ban, bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, san, sfc, tok) => [ban, bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, san, sfc, tok]
   
       ).map(cities => {
   
