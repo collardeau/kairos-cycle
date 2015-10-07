@@ -38,6 +38,13 @@ export default function city(responses) {
         'padding': '0.1em 0 1.3em 1.3em',
         'borderRadius': '25px',
       },
+      'name': {
+        'marginBotton': '0.3em'      
+      },
+      'table': {
+        'width': '66%',
+        'marginBottom': '0.5em'      
+      },
      'forecasts': {
         'display': state.toggle,
         'flexWrap': 'wrap',
@@ -45,15 +52,22 @@ export default function city(responses) {
       },
       'half': {
         'width': '50%'
+      },
+      'dim': {
+        'color': '#777' 
+      },
+      'moreBtn': {
+        'float': 'right',
+        'marginRight': '0.8em'
       }
     };
 
     return (
       <div style={sty.container}>
         <header style={sty.header}>
-          <h3 style={{ 'marginBottom': '0.3em'}}>{name}</h3>
-          <small style={{'color': '#777'}}>{ timespan }</small>
-          <table style={{'width': '66%', 'marginBottom': '0.5em'}}>
+          <h3 style={sty.name}>{name}</h3>
+          <small style={sty.dim}>{ timespan }</small>
+          <table style={sty.table}>
             <tr style={{'height': '2.1em'}}>
               <td>Min High</td>
               <td>{ minHigh }C</td>
@@ -63,7 +77,7 @@ export default function city(responses) {
               <td>{ minSun }%</td>
             </tr>
           </table>
-          <span id='toggle'style={{'float': 'right', 'marginRight': '0.8em'}}>...</span>
+          <span id='toggle'style={sty.moreBtn}>...</span>
        </header>
         <div style={sty.forecasts}>
           { forecasts.map(forecast => renderForecast(Ob$.just(forecast))) }
