@@ -64,10 +64,15 @@ export default function model(actions){
             name: city.name ,
             forecasts: list.map(forecast => {
               let date = new Date(forecast.dt * 1000);
+              console.log(forecast);
               return {
                 date: date.getDayName() + ' ' + date.getDate(),
-                minTemp: Math.round(forecast.temp.min),
+                desc: forecast.weather[0].description,
+                high: Math.round(forecast.temp.max),
+                low: Math.round(forecast.temp.min),
                 maxCloud: 100 - forecast.clouds,
+                humidity: forecast.humidity,
+                wind: Math.round(forecast.speed)
               }
             }).slice(1) // dismiss today 
           }
@@ -104,8 +109,8 @@ export default function model(actions){
       return {
         ...city,
         minTemp: forecasts.reduce((min, next) => {
-          return next.minTemp < min ? next.minTemp : min;      
-        }, forecasts[0].minTemp),
+          return next.high < min ? next.high : min;      
+        }, forecasts[0].high),
         maxCloud: forecasts.reduce((max, next) => {
           return next.maxCloud < max ? next.maxCloud : max;      
         }, 100 - forecasts[0].maxCloud),

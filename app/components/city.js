@@ -26,7 +26,7 @@ export default function city(responses) {
 
   function renderDetails(state$) {
     return state$.map(state => {
-      let { date, minTemp, maxCloud } = state;
+      let { date, desc, high, low, humidity, maxCloud, wind } = state;
 
       let sty = {
         'forecast': {
@@ -41,20 +41,29 @@ export default function city(responses) {
       return (
         <span style={sty.forecast }>
         <h5 style={sty.date}>{date}</h5>
+        <p>{ desc }</p>
           <table>
             <tr>
               <td>High</td>
-              <td>{ minTemp }</td>
+              <td>{ high }</td>
             </tr>
             <tr>
               <td>Low</td>
-              <td>0</td>
+              <td>{ low }</td>
             </tr>
- 
             <tr>
-              <td>Sunny</td>
+              <td>Sun</td>
               <td>{ maxCloud }%</td>
             </tr>
+            <tr>
+              <td>H</td>
+              <td>{ humidity }%</td>
+            </tr>
+             <tr>
+              <td>Wind</td>
+              <td>{ wind } m/s</td>
+            </tr>
+ 
           </table>
         </span>    
         );
