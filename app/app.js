@@ -26,7 +26,7 @@ export default function app ({DOM, HTTP}) {
   let state$ = model(actions);
   let vtree$ = view(state$);
 
-  state$.subscribe(x => console.log(x));
+  //state$.subscribe(x => console.log(x));
   return {
     DOM: vtree$,
     HTTP: weather$

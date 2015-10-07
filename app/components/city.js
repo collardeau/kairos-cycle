@@ -72,7 +72,7 @@ export default function city(responses) {
  
   return state$.map(state => {
 
-    let { forecasts, name, maxCloud, minTemp, timespan } = state.props;
+    let { forecasts, name, maxCloud, minHigh, timespan } = state.props;
 
     let sty = {
       'container': {
@@ -101,7 +101,7 @@ export default function city(responses) {
           <table style={{'width': '66%', 'marginBottom': '0.5em'}}>
             <tr style={{'height': '2.1em'}}>
               <td>Min High</td>
-              <td>{ minTemp }C</td>
+              <td>{ minHigh }C</td>
             </tr>
             <tr style={{'width': '2.1em'}}>
               <td>Min Sun</td>

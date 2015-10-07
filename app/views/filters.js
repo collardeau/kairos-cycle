@@ -1,7 +1,7 @@
 /** @jsx hJSX */ 
 import {hJSX} from '@cycle/dom';
 
-export default function renderFilters({minTemp, maxCloud, maxDays, minDays}) {
+export default function renderFilters({minHigh, maxCloud, maxDays, minDays}) {
 
   let styles = {
    'container': {
@@ -50,8 +50,8 @@ export default function renderFilters({minTemp, maxCloud, maxDays, minDays}) {
         <span style = {styles.half}>At least this <b>temperature</b> each day:</span>
         <div style={styles.half}>
         <labeled-slider 
-          key = {1} id="minTemp" label="" mea="C"
-          initial = {minTemp} min="0" max="30"
+          key = {1} id="minHigh" label="" mea="C"
+          initial = {minHigh} min="0" max="30"
         />
         </div>
         <span style={styles.half}>At least this amount of <b>sun</b> each day:</span>
