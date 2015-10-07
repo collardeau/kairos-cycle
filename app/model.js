@@ -64,13 +64,12 @@ export default function model(actions){
             name: city.name ,
             forecasts: list.map(forecast => {
               let date = new Date(forecast.dt * 1000);
-              console.log(forecast);
               return {
                 date: date.getDayName() + ' ' + date.getDate(),
                 desc: forecast.weather[0].description,
                 high: Math.round(forecast.temp.max),
                 low: Math.round(forecast.temp.min),
-                maxCloud: 100 - forecast.clouds,
+                maxCloud: 100 - forecast.clouds, // min sun
                 humidity: forecast.humidity,
                 wind: Math.round(forecast.speed)
               }
@@ -113,7 +112,7 @@ export default function model(actions){
         }, forecasts[0].high),
         maxCloud: forecasts.reduce((max, next) => {
           return next.maxCloud < max ? next.maxCloud : max;      
-        }, 100 - forecasts[0].maxCloud),
+        }, forecasts[0].maxCloud),
         timespan: startDate + ' to ' + endDate
       }
   
