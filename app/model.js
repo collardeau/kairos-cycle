@@ -21,6 +21,12 @@ export default function model(actions){
 
   let { changeMaxDays$, changeMinDays$, changeMaxCloud$, changeMinTemp$ } = actions;
 
+  // date helper
+  let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  Date.prototype.getMonthName = function() { return months[this.getMonth() ]; }
+  Date.prototype.getDayName = function() { return days[this.getDay() ]; }
+ 
   return Ob$.combineLatest(
 
     // user action streams
@@ -59,11 +65,11 @@ export default function model(actions){
             forecasts: list.map(forecast => {
               let date = new Date(forecast.dt * 1000);
               return {
-                date: date.getDate() + ' October',
+                date: date.getDayName() + ' ' + date.getDate(),
                 minTemp: Math.round(forecast.temp.min),
                 maxCloud: 100 - forecast.clouds,
               }
-            })
+            }).slice(1) // dismiss today 
           }
         });
       }).startWith([]),
@@ -76,9 +82,9 @@ export default function model(actions){
     (cities, maxDays, minDays) => {
       return cities.map(city => {
         if (!city) return null;
-        return {
+       return {
           ...city,
-         forecasts: city.forecasts.slice(minDays-1, maxDays)
+          forecasts: city.forecasts.slice(minDays-1, maxDays),
         };    
       });
     }
@@ -92,7 +98,9 @@ export default function model(actions){
 
       if (!city) return null;
       let {forecasts} = city;
-
+      let startDate = city.forecasts[0].date;
+      let endDate = city.forecasts[city.forecasts.length-1].date
+ 
       return {
         ...city,
         minTemp: forecasts.reduce((min, next) => {
@@ -100,7 +108,8 @@ export default function model(actions){
         }, forecasts[0].minTemp),
         maxCloud: forecasts.reduce((max, next) => {
           return next.maxCloud < max ? next.maxCloud : max;      
-        }, 100 - forecasts[0].maxCloud)
+        }, 100 - forecasts[0].maxCloud),
+        timespan: startDate + ' to ' + endDate
       }
   
     });

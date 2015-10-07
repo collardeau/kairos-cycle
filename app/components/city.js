@@ -63,7 +63,7 @@ export default function city(responses) {
  
   return state$.map(state => {
 
-    let { forecasts, name, maxCloud, minTemp } = state.props;
+    let { forecasts, name, maxCloud, minTemp, timespan } = state.props;
 
     let sty = {
       'container': {
@@ -88,6 +88,7 @@ export default function city(responses) {
       <div style={sty.container}>
         <header style={sty.header}>
           <h3 style={{ 'marginBottom': '0.3em'}}>{name}</h3>
+          <small style={{'color': '#777'}}>{ timespan }</small>
           <table style={{'width': '66%', 'marginBottom': '0.5em'}}>
             <tr style={{'height': '2.1em'}}>
               <td>Min High</td>
@@ -98,7 +99,6 @@ export default function city(responses) {
               <td>{ maxCloud }%</td>
             </tr>
           </table>
-          <small style={{'color': '#777'}}>between Oct 6 and Oct 10</small>
           <span id='toggle'style={{'float': 'right', 'marginRight': '0.8em'}}>...</span>
        </header>
         <div style={sty.forecasts}>
@@ -113,7 +113,6 @@ export default function city(responses) {
   let state$ = model(responses, actions);
   let vtree$ = view(state$)
 
-  state$.subscribe(x => console.log(x));
   return {
     DOM: vtree$
   }

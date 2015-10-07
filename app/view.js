@@ -23,11 +23,11 @@ export default function view(state$) {
 
             if (!city) { return <div>Loading</div> }
 
-            let { name, maxCloud, minTemp, forecasts } = city;
+            let { name, maxCloud, minTemp, forecasts, timespan } = city;
 
             return <city name={name} 
               maxCloud={ maxCloud } minTemp={ minTemp } 
-              forecasts = { forecasts } />
+              forecasts = { forecasts } timespan={ timespan }/>
 
           }) 
           
