@@ -28,26 +28,26 @@ export default function renderFilters({minTemp, maxCloud, maxDays, minDays}) {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>Show Me Weather Forecasts</h2>
+      <h2 style={styles.header}>Find your Ideal Weather</h2>
       <div style={styles.filters}>
         <span style={styles.half}>
-         <label style={styles.padRight}>From</label>
+         <label style={styles.padRight}>Starting</label>
         <select id="forecastFrom">
-          <option value="1">today</option>
-          <option value="2">tomorrow</option>
-          <option value="3">+2 days</option>
-          <option value="4">+3</option>
+          <option value="0">tomorrow</option>
+          <option value="1">day after tomorrow</option>
         </select>
         </span>
         <span style={styles.half}>
-         <label style={styles.padRight}>To</label>
+         <label style={styles.padRight}>For</label>
         <select id="forecastUntil">
-          <option value="5">Sat 10 Oct</option>
-          <option value="6">+5</option>
-          <option value="7">+6</option>
+          <option value="1">same day</option>
+          <option value="2">2 days</option>
+          <option selected value="3">3 days</option>
+          <option value="4">4 days</option>
+          <option value="5">5 days</option>
         </select>
         </span>
-        <span style = {styles.half}>At least this <b>temperature</b> every day:</span>
+        <span style = {styles.half}>At least this <b>temperature</b> each day:</span>
         <div style={styles.half}>
         <labeled-slider 
           key = {1} id="minTemp" label="" mea="C"

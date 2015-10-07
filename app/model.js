@@ -33,7 +33,7 @@ export default function model(actions){
     changeMinTemp$.startWith(0),
     changeMaxCloud$.startWith(0),
     changeMaxDays$.startWith("3"),
-    changeMinDays$.startWith("1"),
+    changeMinDays$.startWith("0"),
 
     // api data prettied up with only forecast days
     
@@ -81,7 +81,7 @@ export default function model(actions){
   
     // selected days to forecast stream
     changeMaxDays$.startWith("3"),
-    changeMinDays$.startWith("1"),
+    changeMinDays$.startWith("0"),
   
     // combine to make stream with only selected days to forecast
     (cities, maxDays, minDays) => {
@@ -89,7 +89,7 @@ export default function model(actions){
         if (!city) return null;
        return {
           ...city,
-          forecasts: city.forecasts.slice(minDays-1, maxDays),
+          forecasts: city.forecasts.slice(+minDays, +minDays + +maxDays),
         };    
       });
     }
