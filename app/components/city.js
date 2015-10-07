@@ -14,6 +14,7 @@ export default function city(responses) {
   }
 
   function model(context, actions) {
+    // toggle is not used
     return Ob$.combineLatest(
       actions.toggleDetails$.startWith('none').scan((x, y) => {
          return x === 'flex' ? 'none' : 'flex';
@@ -33,9 +34,9 @@ export default function city(responses) {
       <div style={sty.container}>
         <h3 style={sty.name}>{name}</h3>
         <span style={sty.dim}>From { timespan }</span>
-        <p>Highs between <b>{ minHigh }&ordm;C</b> and <b>{ maxHigh }&ordm;C</b>.</p>
-        <p>Skies at least <b>{minSun}% clear</b> each day.</p>
-        <p>The lowest temp expected is <b> { minLow } &ordm;C</b>.</p>
+        <p>Highs between <b>{ minHigh } </b> and <b>{ maxHigh }&ordm;C</b>.</p>
+        <p>Skies at least <b>{minSun}% clear</b> every day.</p>
+        <p>Low expected to be <b> { minLow }&ordm;C</b>.</p>
      </div>
     );
   });
@@ -52,18 +53,14 @@ export default function city(responses) {
 
 let sty = {
   'container': {
-    'marginTop': '0.8em',
+    'marginTop': '1.3em',
     'backgroundColor': 'lightblue',
-    'padding': '0.1em 0 1.3em 1.3em',
+    'padding': '1.3em',
     'borderRadius': '25px',
   },
-  'header': {
-    'backgroundColor': 'lightgoldenrodyellow',
-    'padding': '0.1em 0 1.3em 1.3em',
-    'borderRadius': '25px',
-  },
-  'name': {
-    'marginBotton': '0.3em'      
+ 'name': {
+   'margin': '0',
+   'marginBottom': '0.3em'
   },
   'dim': {
     'color': '#777' 

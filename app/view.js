@@ -10,6 +10,11 @@ export default function view(state$) {
       'app': {
         'margin': '0 auto',
         'width': '90%' 
+      },
+      'cities': {
+        'display': 'flex',
+        'flexWrap': 'wrap',
+        'justifyContent': 'space-around'
       }
    }
 
@@ -19,6 +24,7 @@ export default function view(state$) {
 
         { renderFilters({selectedMinSun, selectedMinHigh, startDay, selectedDuration }) }       
 
+        <div style={styles.cities}>
         { filteredCities.map(city => {
 
             if (!city) { return <div>Loading</div> }
@@ -32,6 +38,7 @@ export default function view(state$) {
           }) 
           
         }
+        </div>
 
       </div> 
     )

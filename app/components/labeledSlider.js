@@ -37,7 +37,7 @@ export default function labeledSlider(responses) {
             value={value} 
           />
           <br />
-          <b>{ value }{ mea }</b>
+          <b>{ value } { mea }</b>
         </div>      
       );
     });
