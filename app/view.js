@@ -17,7 +17,7 @@ export default function view(state$) {
         'justifyContent': 'space-around'
       },
       'header': {
-        'paddingTop': '0.5em',
+        'padding': '0.5em 0',
         'textAlign': 'center'
       },
       'heading': {
@@ -43,7 +43,9 @@ export default function view(state$) {
 
         { renderFilters({selectedMinSun, selectedMinHigh, startDay, selectedDuration }) }       
 
-        <h3 style={styles.heading}>x Results</h3>
+        <h3 style={styles.heading}>
+          { filteredCities.length} { filteredCities.length > 1 ? 'Results' : 'Result' }
+        </h3>
 
         <div style={styles.cities}>
           
@@ -66,5 +68,4 @@ export default function view(state$) {
     )
   });
 }
-
 
