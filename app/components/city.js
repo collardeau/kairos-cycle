@@ -34,9 +34,9 @@ export default function city(responses) {
       <div style={sty.container}>
         <h3 style={sty.name}>{name}</h3>
         <span style={sty.dim}>From { timespan }</span>
-        <p>Highs between <b>{ minHigh } </b> and <b>{ maxHigh }&ordm;C</b>.</p>
-        <p>Skies at least <b>{minSun}% clear</b> every day.</p>
-        <p>Low expected to be <b> { minLow }&ordm;C</b>.</p>
+        <p>Day Highs from <b>{ minHigh } </b> to <b>{ maxHigh }&ordm;C</b></p>
+        <p>Clear sky at least <b>{minSun}%</b>of each day</p>
+        <p>Low: <b> { minLow }&ordm;C</b></p>
      </div>
     );
   });
@@ -53,10 +53,11 @@ export default function city(responses) {
 
 let sty = {
   'container': {
-    'marginTop': '1.3em',
-    'backgroundColor': 'lightblue',
+    'marginTop': '1em',
+    'backgroundColor': '#C2EAE9',
     'padding': '1.3em',
-    'borderRadius': '25px',
+    'borderRadius': '25px'
+    //'border': '3px dotted #F8EFB6'
   },
  'name': {
    'margin': '0',

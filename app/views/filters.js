@@ -5,42 +5,38 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
 
  return (
     <div style={styles.container}>
-      <h2 style={styles.header}>Find Better Weather</h2>
+      <h2 style={styles.header}>WEATHER LOCATOR</h2>
       <div style={styles.filters}>
-        <span style={styles.half}>
-        <select id="forecastFrom">
+        <label>Starting </label><br />
+        <select style={styles.select} id="forecastFrom">
           <option value="0">Tomorrow</option>
           <option value="1">day after tomorrow</option>
         </select>
-        </span>
-        <span style={styles.half}>
-         <label style={styles.padRight}>For</label>
-        <select id="forecastUntil">
+          <br />
+         <label>For </label><br />
+        <select style={styles.select} id="forecastUntil">
           <option value="1">same day</option>
           <option value="2">2 days</option>
           <option selected value="3">3 days</option>
           <option value="4">4 days</option>
           <option value="5">5 days</option>
         </select>
+        <span>
+          <h4 style={styles.heading}>Temperature</h4>
         </span>
-        <span style = {styles.half}>
-          <b>Temperature</b>:
-          <br /><small>at least this <b>warm</b> each day</small>
-        </span>
-        <div style={styles.half}>
+        <div>
         <labeled-slider 
           key = {1} id="minHigh" label="" mea="&ordm;C"
           initial = {selectedMinHigh} min="0" max="30"
         />
         </div>
-        <span style = {styles.half}>
-          <b>Sunny</b>:
-          <br /><small>at least this <b>clear</b> each day</small>
+        <span>
+          <h4 style={styles.heading}>Sunny</h4>
         </span>
  
-        <div style={styles.half}>
+        <div>
         <labeled-slider 
-          key = {2} id="minSun" label=""  mea="%"
+          key = {2} id="minSun" label=""  mea="% clear sky"
           initial = {selectedMinSun} min="0" max="75"
         />
         </div>
@@ -54,14 +50,27 @@ let styles = {
    'padding': '0.5em',
    'borderRadius': '25px',
    'marginTop': '0.5em',
-   'backgroundColor': 'lightgoldenrodyellow'
+   'backgroundColor': '#F8EFB6',
+   'textAlign': 'center'
+   //'border': '5px dotted #FEBAC5'
  },
  'header': {
-   'textAlign': 'center'
+   'textAlign': 'center',
+   'margin': '0',
+   'marginBottom': '0.5em'
  },
  'filters': {
-   'display': 'flex',
+   'display': 'block',
    'flexWrap': 'wrap'
+ },
+ 'heading': {
+  'margin': '1.3em 0 0.5em 0',
+  'backgroundColor': 'white',
+  'borderRadius': '0.5em'
+ },
+ 'select': {
+   'width': '70%',
+   'padding': '0.5em'
  },
  'half': {
    'flex': '1 0 40%',

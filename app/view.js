@@ -9,12 +9,26 @@ export default function view(state$) {
     let styles = {
       'app': {
         'margin': '0 auto',
-        'width': '90%' 
+        'width': '85%' 
       },
       'cities': {
         'display': 'flex',
         'flexWrap': 'wrap',
         'justifyContent': 'space-around'
+      },
+      'header': {
+        'textAlign': 'center'      
+      },
+      'heading': {
+        'margin': '0 auto',
+        'marginTop': '0.5em',
+        'backgroundColor': 'white',
+        'padding': '0.5em',
+        'borderRadius': '25px',
+        'height': '30px',
+        'lineHeight': '30px',
+        'textAlign': 'center',
+        'maxWidth': '150px'
       }
    }
 
@@ -22,9 +36,13 @@ export default function view(state$) {
 
       <div style={styles.app}>
 
+        <h1 style={styles.header}>KAIROS</h1>
         { renderFilters({selectedMinSun, selectedMinHigh, startDay, selectedDuration }) }       
 
+        <h3 style={styles.heading}>x Results</h3>
+
         <div style={styles.cities}>
+          
         { filteredCities.map(city => {
 
             if (!city) { return <div>Loading</div> }

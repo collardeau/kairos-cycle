@@ -37,7 +37,7 @@ export default function labeledSlider(responses) {
             value={value} 
           />
           <br />
-          <b>{ value } { mea }</b>
+          at least <b>{ value } { mea }</b> each day
         </div>      
       );
     });
