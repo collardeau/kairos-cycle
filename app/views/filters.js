@@ -5,17 +5,16 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
 
  return (
     <div style={styles.container}>
-      <h2 style={styles.header}>SEARCH WEATHER</h2> <div style={styles.filters}>
+      <h2 style={styles.header}>FIND WEATHER</h2> <div style={styles.filters}>
 
         <label>Starting</label>
-
         <div style={styles.selectBox}> 
-        <select style={styles.select} id="forecastFrom">
-          <option value="0">Tomorrow</option>
-          <option value="1">day after tomorrow</option>
-        </select>
+          <select style={styles.select} id="forecastFrom">
+            <option value="0">Tomorrow</option>
+            <option value="1">day after tomorrow</option>
+          </select>
         </div>
-        <label>For</label><br />
+        <label>for:</label>
         <div style={styles.selectBox}> 
           <select style={styles.select} id="forecastUntil">
             <option value="1">same day</option>
@@ -50,7 +49,7 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
 
 let styles = {
  'container': {
-   'padding': '0.5em',
+   'padding': '0.8em',
    'borderRadius': '25px',
    'marginTop': '0.5em',
    'backgroundColor': '#F8EFB6',
@@ -70,7 +69,7 @@ let styles = {
   'margin': '0 auto',
   'marginTop': '1.3em',
   'marginBottom': '0.5em',
-  'backgroundColor': '#FEBAC5',
+  'backgroundColor': '#6CD1EA',
   'width': '140px',
   'padding': '5px 8px',
   'color': '#fff'

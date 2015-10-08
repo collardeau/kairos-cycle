@@ -17,7 +17,8 @@ export default function view(state$) {
         'justifyContent': 'space-around'
       },
       'header': {
-        'textAlign': 'center'      
+        'paddingTop': '0.5em',
+        'textAlign': 'center'
       },
       'heading': {
         'margin': '0 auto',
@@ -36,7 +37,10 @@ export default function view(state$) {
 
       <div style={styles.app}>
 
-        <h1 style={styles.header}>KAIROS</h1>
+        <div style={styles.header}>
+          <img src='white_logo.png' />
+        </div>
+
         { renderFilters({selectedMinSun, selectedMinHigh, startDay, selectedDuration }) }       
 
         <h3 style={styles.heading}>x Results</h3>
