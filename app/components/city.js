@@ -34,9 +34,9 @@ export default function city(responses) {
       <div style={sty.container}>
         <h3 style={sty.name}>{name}</h3>
         <span style={sty.dim}>From { timespan }</span>
-        <p>Day Highs from <b>{ minHigh } </b> to <b>{ maxHigh }&ordm;C</b></p>
-        <p>Clear sky at least <b>{minSun}%</b>of each day</p>
-        <p>Low: <b> { minLow }&ordm;C</b></p>
+        <p>Day Highs from <b>{ minHigh }&ordm;C</b> to <b>{ maxHigh }&ordm;C</b></p>
+        <p>Lowest expected temp: <b> { minLow }&ordm;C</b></p>
+        <p>At least <b>{minSun}% </b> clear sky each day.</p>
      </div>
     );
   });

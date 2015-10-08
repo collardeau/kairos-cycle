@@ -29,7 +29,7 @@ export default function labeledSlider(responses) {
       let value = state.value;
       return (
         <div>
-          at least <b>{ value } { mea }</b> each day
+          at least <b>{ value }{ mea }</b> each day
           <input style={{'width': '88%', 'marginTop': '0.5em'}}
             className='slider' 
             type='range' 

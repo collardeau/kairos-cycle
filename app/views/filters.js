@@ -5,16 +5,16 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
 
  return (
     <div style={styles.container}>
-      <h2 style={styles.header}>CHASE WEATHER</h2> <div style={styles.filters}>
+      <h2 style={styles.header}>CHASE BETTER WEATHER</h2> <div style={styles.filters}>
 
-        <label>Starting</label>
+        <div>Starting</div>
         <div style={styles.selectBox}> 
           <select style={styles.select} id="forecastFrom">
             <option value="0">Tomorrow</option>
             <option value="1">day after tomorrow</option>
           </select>
         </div>
-        <label>For:</label>
+        <div style={{'marginTop': '0.5em'}}>For:</div>
         <div style={styles.selectBox}> 
           <select style={styles.select} id="forecastUntil">
             <option value="1">same day</option>
@@ -39,7 +39,7 @@ export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays,
         <div>
           <labeled-slider 
             key = {2} id="minSun" label=""  mea="% clear sky"
-            initial = {selectedMinSun} min="0" max="75"
+            initial = {selectedMinSun} min="0" max="80"
           />
         </div>
       </div>
