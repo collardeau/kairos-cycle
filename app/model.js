@@ -1,48 +1,56 @@
 import {Rx} from '@cycle/core';
+
 let Ob$ = Rx.Observable;
 
-let 
-  bcnReq = require('json!../sample-data/barcelona.json'),
-  berReq = require('json!../sample-data/berlin.json'),
-  copReq = require('json!../sample-data/copenhagen.json'),
-  istReq = require('json!../sample-data/istanbul.json'),
-  lonReq = require('json!../sample-data/london.json'),
-  madReq = require('json!../sample-data/madrid.json'),
-  miaReq = require('json!../sample-data/miami.json'),
-  nicReq = require('json!../sample-data/nice.json'),
-  nycReq = require('json!../sample-data/newyork.json'),
-  porReq = require('json!../sample-data/porto.json'),
-  romReq = require('json!../sample-data/rome.json'),
-  sanReq = require('json!../sample-data/santiago.json'),
-  sfcReq = require('json!../sample-data/sanfrancisco.json'),
-  tokReq = require('json!../sample-data/tokyo.json');
+export default function model(actions, HTTP){ 
 
-let 
-  bcnRe$ = Ob$.just(bcnReq).delay(2400), 
-  berRe$ = Ob$.just(berReq).delay(1200),
-  copRe$ = Ob$.just(copReq).delay(500),
-  istRe$ = Ob$.just(istReq).delay(600),
-  lonRe$ = Ob$.just(lonReq).delay(800), 
-  miaRe$ = Ob$.just(miaReq).delay(1700),
-  nicRe$ = Ob$.just(nicReq).delay(250), 
-  nycRe$ = Ob$.just(nycReq).delay(250),
-  madRe$ = Ob$.just(madReq).delay(100),
-  porRe$ = Ob$.just(porReq).delay(700), 
-  romRe$ = Ob$.just(romReq).delay(100),
-  sanRe$ = Ob$.just(sanReq).delay(1100),
-  sfcRe$ = Ob$.just(sfcReq).delay(2700),
-  tokRe$ = Ob$.just(tokReq).delay(1000);
+  let { changeDuration$, changeStartDay$, 
+    changeMinSun$, changeMinHigh$ } = actions;
 
-export default function model(actions){ 
+  let bcn$, ber$, cop$, ist$, lon$, mad$, 
+    mia$, nic$, nyc$, por$, rom$, sfc$, tok$;
 
-  let { changeDuration$, changeStartDay$, changeMinSun$, changeMinHigh$ } = actions;
+  let production = true; // fake network requests if true
 
-  // date helper
-  let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  Date.prototype.getMonthName = function() { return months[this.getMonth() ]; }
-  Date.prototype.getDayName = function() { return days[this.getDay() ]; }
- 
+  if(!production){
+    bcn$ = require('./mockData').bcn$;
+    ber$ = require('./mockData').ber$;
+    cop$ = require('./mockData').cop$;
+    ist$ = require('./mockData').ist$;
+    lon$ = require('./mockData').lon$;
+    mad$ = require('./mockData').mad$;
+    mia$ = require('./mockData').mia$;
+    nic$ = require('./mockData').nic$;
+    nyc$ = require('./mockData').nyc$;
+    por$ = require('./mockData').por$;
+    rom$ = require('./mockData').rom$;
+    sfc$ = require('./mockData').sfc$;
+    tok$ = require('./mockData').tok$;
+
+  }else{
+
+    let weatherRe$ = HTTP
+    .filter(re$ => re$.request.indexOf('weather') > -1)
+    .mergeAll()
+    .map(res => res.body);
+    //weatherRe$.subscribe(x => console.log(x)) 
+
+    bcn$ = weatherRe$.filter(c => c.city.name === 'Barcelona');
+    ber$ = weatherRe$.filter(c => c.city.name === 'Berlin');
+    cop$ = weatherRe$.filter(c => c.city.name === 'Copenhagen');
+    ist$ = weatherRe$.filter(c => c.city.name === 'Istanbul');
+    lon$ = weatherRe$.filter(c => c.city.name === 'London');
+    mad$ = weatherRe$.filter(c => c.city.name === 'Madrid');
+    mia$ = weatherRe$.filter(c => c.city.name === 'Miami');
+    nic$ = weatherRe$.filter(c => c.city.name === 'Nice');
+    nyc$ = weatherRe$.filter(c => c.city.name === 'New York');
+    por$ = weatherRe$.filter(c => c.city.name === 'Porto');
+    rom$ = weatherRe$.filter(c => c.city.name === 'Rome');
+    sfc$ = weatherRe$.filter(c => c.city.name === 'San Francisco');
+    tok$ = weatherRe$.filter(c => c.city.name === 'Tokyo');
+
+  }
+
   return Ob$.combineLatest(
 
     // user action streams
@@ -61,24 +69,23 @@ export default function model(actions){
   
         // each raw response stream
   
-        bcnRe$.startWith(null), 
-        berRe$.startWith(null), 
-        copRe$.startWith(null), 
-        istRe$.startWith(null), 
-        lonRe$.startWith(null),
-        madRe$.startWith(null),
-        miaRe$.startWith(null), 
-        nicRe$.startWith(null), 
-        nycRe$.startWith(null),
-        porRe$.startWith(null), 
-        romRe$.startWith(null),
-        sanRe$.startWith(null),
-        sfcRe$.startWith(null), 
-        tokRe$.startWith(null),
+        bcn$.startWith(null), 
+        ber$.startWith(null), 
+        cop$.startWith(null), 
+        ist$.startWith(null), 
+        lon$.startWith(null),
+        mad$.startWith(null),
+        mia$.startWith(null), 
+        nic$.startWith(null), 
+        nyc$.startWith(null),
+        por$.startWith(null), 
+        rom$.startWith(null),
+        sfc$.startWith(null), 
+        tok$.startWith(null),
   
         // combine to make sieved responses stream 
   
-        (bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, san, sfc, tok) => [bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, san, sfc, tok]
+        (bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, sfc, tok) => [bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, sfc, tok]
   
       ).map(cities => {
   
@@ -87,7 +94,7 @@ export default function model(actions){
         return cities.map(cityRaw => {
           if (!cityRaw) return null;
           let { city, list } = cityRaw;
-          return {
+         return {
             name: city.name ,
             forecasts: list.map(forecast => {
               let date = new Date(forecast.dt * 1000);
@@ -112,8 +119,8 @@ export default function model(actions){
     // combine to make stream with only selected days to forecast
     (cities, startDay, selectedDuration) => {
       return cities.map(city => {
-        if (!city) return null;
-       return {
+       if (!city) return null;
+      return {
           ...city,
           forecasts: city.forecasts.slice(+startDay, +startDay + +selectedDuration),
         };    
@@ -158,8 +165,11 @@ export default function model(actions){
     (selectedMinHigh, selectedMinSun, startDay, selectedDuration, cities) => ({
       filteredCities: cities.filter(city => {
         if(!city) return null;
-        return city.minHigh > selectedMinHigh
-        && city.minSun > selectedMinSun;
+          if (city.name === 'London'){
+            console.log(city); 
+          }
+        return city.minHigh >= selectedMinHigh
+        && city.minSun >= selectedMinSun;
       }),
       selectedMinHigh,
       selectedMinSun,
@@ -169,4 +179,13 @@ export default function model(actions){
 
   );
 }
+
+// date helper
+let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+Date.prototype.getMonthName = function() { return months[this.getMonth() ]; }
+Date.prototype.getDayName = function() { return days[this.getDay() ]; }
+
 
