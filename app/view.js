@@ -30,6 +30,10 @@ export default function view(state$) {
         'lineHeight': '30px',
         'textAlign': 'center',
         'maxWidth': '150px'
+      },
+      'footer': {
+        'paddingTop': '1.3em',
+        'textAlign': 'center'
       }
    }
 
@@ -62,6 +66,10 @@ export default function view(state$) {
           }) 
           
         }
+        </div>
+        <div style={styles.footer}>
+          <img src='black_logo.png' />  
+          <p><a href='http://thomas.collardeau.com'>thomas.collardeau.com</a></p>
         </div>
 
       </div> 
