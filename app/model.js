@@ -7,7 +7,18 @@ export default function model(actions, HTTP){
   let { changeDuration$, changeStartDay$, 
     changeMinSun$, changeMinHigh$ } = actions;
 
-  let cities$ = require('./mockData').cities$;
+  let cities$;
+  let production = false;
+
+  if(production){
+    cities$ = HTTP
+    .filter(re$ => re$.request.indexOf('cities') > -1)
+     .mergeAll()
+    .map(res => res.body);
+    //cities$.subscribe(x => console.log(x)) 
+  }else{
+    cities$ = require('./mockData').cities$;
+  }
 
   return Ob$.combineLatest(
 
