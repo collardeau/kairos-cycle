@@ -10,7 +10,7 @@ export default function model(actions, HTTP){
   let bcn$, ber$, cop$, ist$, lon$, mad$, 
     mia$, nic$, nyc$, por$, rom$, sfc$, tok$;
 
-  let production = true; // fake network requests if true
+  let production = false; // fake network requests if true
 
   if(!production){
     bcn$ = require('./mockData').bcn$;
@@ -164,11 +164,8 @@ export default function model(actions, HTTP){
 
     (selectedMinHigh, selectedMinSun, startDay, selectedDuration, cities) => ({
       filteredCities: cities.filter(city => {
-        if(!city) return null;
-          if (city.name === 'London'){
-            console.log(city); 
-          }
-        return city.minHigh >= selectedMinHigh
+       if(!city) return null;
+       return city.minHigh >= selectedMinHigh
         && city.minSun >= selectedMinSun;
       }),
       selectedMinHigh,
