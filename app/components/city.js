@@ -6,37 +6,50 @@ import renderForecast from '../views/forecast';
 let Ob$ = Cycle.Rx.Observable;
 
 export default function city(responses) {
-  
-  function intent(DOM){
-    return {
-      toggleDetails$ : DOM.select('#toggle').events('click')
-    };
-  }
 
-  function model(context, actions) {
-    // toggle is not used
-    return Ob$.combineLatest(
-      actions.toggleDetails$.startWith('none').scan((x, y) => {
-         return x === 'flex' ? 'none' : 'flex';
-      }),
-      context.props.getAll(),
-      (toggle, props) => ({toggle,props})
-    );
-  }
+function intent(DOM){
+  return {
+    toggleDetails$ : DOM.select('#toggle').events('click')
+  };
+}
 
- function view(state$){
+function model(context, actions) {
+  // action (toggle) is not used
+  return Ob$.combineLatest(
+    actions.toggleDetails$.startWith('none').scan((x, y) => {
+       return x === 'flex' ? 'none' : 'flex';
+    }),
+    context.props.getAll(),
+    (toggle, props) => ({toggle,props})
+  );
+}
 
-   return state$.map(state => {
+function view(state$){
 
-    let { forecasts, name, minSun, minLow, maxHigh, minHigh, timespan } = state.props;
+ return state$.map(state => {
 
-    return (
-      <div style={sty.container}>
-        <h3 style={sty.name}>{name}</h3>
-        <span style={sty.dim}>From { timespan }</span>
-        <p>Day Highs from <b>{ minHigh }&ordm;C</b> to <b>{ maxHigh }&ordm;C</b></p>
-        <p>Lowest expected temp: <b> { minLow }&ordm;C</b></p>
-        <p>At least <b>{minSun}% </b> clear sky each day.</p>
+  let { forecasts, name, minSun, minLow, maxHigh, minHigh, timespan } = state.props;
+  let deg = '$ordm;';
+
+  return (
+    <div style={sty.container}>
+      <h3 style={sty.name}>{name}</h3>
+      <span style={sty.dim}>From { timespan }</span>
+
+      { maxHigh !== minHigh ? 
+        <p>
+          Day Highs from <b>{ minHigh }&ordm;C</b> to <b>{ maxHigh }&ordm;C</b>
+        </p> :
+        <p>Highs of <b>{ maxHigh }&ordm;C</b></p> 
+      }
+
+     <p>Lowest expected temp: <b> { minLow }&ordm;C</b></p>
+
+     { minSun > 29 ?
+          <p>At least <b>{minSun}% clear sky</b> each day.</p> :
+          <p>At least one overcast day with <b>only {minSun}%</b> clear sky.</p>
+       }
+
      </div>
     );
   });
