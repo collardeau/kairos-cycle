@@ -13,15 +13,16 @@
   "devDependencies": {
     "babel": "5.8.23",
     "chai": "3.3.0",
+    "file-loader": "^0.8.4",
     "json-loader": "^0.5.3",
     "mocha": "2.3.3",
+    "url-loader": "0.5.6",
     "webpack": "1.12.2",
     "webpack-dev-server": "1.12.0"
   },
   "dependencies": {
     "@cycle/core": "3.1.0",
     "@cycle/dom": "5.3.0",
-    "@cycle/http": "^4.0.0",
-    "ramda": "^0.17.1"
+    "@cycle/http": "4.0.0"
   }
 }

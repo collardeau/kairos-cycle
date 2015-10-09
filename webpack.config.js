@@ -21,7 +21,10 @@ module.exports = {
       test: /\.js$/, 
       loaders: ['babel'], 
       exclude: path.resolve(__dirname, 'node_modules'),
-    }, 
-  ]}
+    }, {
+      test: /\.(png|gif|jpg)$/,
+      loader: 'url-loader?limit=12500' 
+    }]
+  }
 
 };

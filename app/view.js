@@ -2,6 +2,9 @@
 import {hJSX} from '@cycle/dom';
 import renderFilters from './views/filters';
 
+var whiteLogo = require('../public/img/white_logo.png');
+var blackLogo = require('../public/img/black_logo.png');
+
 export default function view(state$) {
 
   return state$.map(({selectedMinHigh, selectedMinSun, selectedDuration, startDay, filteredCities}) => {
@@ -11,7 +14,7 @@ export default function view(state$) {
       <div style={styles.app}>
 
         <div style={styles.header}>
-          <img src='img/white_logo.png' />
+          <img src={whiteLogo} />
         </div>
 
         { renderFilters({selectedMinSun, selectedMinHigh, startDay, selectedDuration }) }       
@@ -38,7 +41,7 @@ export default function view(state$) {
         }
         </div>
         <div style={styles.footer}>
-          <img src='img/black_logo.png' />  
+          <img src={blackLogo} />  
           <p><a href='http://thomas.collardeau.com'>thomas.collardeau.com</a></p>
         </div>
 
