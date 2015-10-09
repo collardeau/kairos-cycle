@@ -14,7 +14,8 @@ let
   romReq = require('json!../sample-data/rome.json'),
   sanReq = require('json!../sample-data/santiago.json'),
   sfcReq = require('json!../sample-data/sanfrancisco.json'),
-  tokReq = require('json!../sample-data/tokyo.json');
+  tokReq = require('json!../sample-data/tokyo.json'),
+  citiesReq = require('json!../sample-data/cities.json');
 
 let Ob$ = Rx.Observable;
 
@@ -32,5 +33,6 @@ export let rom$ = Ob$.just(romReq).delay(600);
 export let san$ = Ob$.just(sanReq).delay(1000);
 export let sfc$ = Ob$.just(sfcReq).delay(100);
 export let tok$ = Ob$.just(tokReq).delay(0);
+export let cities$ = Ob$.just(citiesReq).delay(1000);
 
 

@@ -7,49 +7,7 @@ export default function model(actions, HTTP){
   let { changeDuration$, changeStartDay$, 
     changeMinSun$, changeMinHigh$ } = actions;
 
-  let bcn$, ber$, cop$, ist$, lon$, mad$, 
-    mia$, nic$, nyc$, por$, rom$, sfc$, tok$;
-
-  let production = false; // fake network requests if true
-
-  if(!production){
-    bcn$ = require('./mockData').bcn$;
-    ber$ = require('./mockData').ber$;
-    cop$ = require('./mockData').cop$;
-    ist$ = require('./mockData').ist$;
-    lon$ = require('./mockData').lon$;
-    mad$ = require('./mockData').mad$;
-    mia$ = require('./mockData').mia$;
-    nic$ = require('./mockData').nic$;
-    nyc$ = require('./mockData').nyc$;
-    por$ = require('./mockData').por$;
-    rom$ = require('./mockData').rom$;
-    sfc$ = require('./mockData').sfc$;
-    tok$ = require('./mockData').tok$;
-
-  }else{
-
-    let weatherRe$ = HTTP
-    .filter(re$ => re$.request.indexOf('weather') > -1)
-    .mergeAll()
-    .map(res => res.body);
-    //weatherRe$.subscribe(x => console.log(x)) 
-
-    bcn$ = weatherRe$.filter(c => c.city.name === 'Barcelona');
-    ber$ = weatherRe$.filter(c => c.city.name === 'Berlin');
-    cop$ = weatherRe$.filter(c => c.city.name === 'Copenhagen');
-    ist$ = weatherRe$.filter(c => c.city.name === 'Istanbul');
-    lon$ = weatherRe$.filter(c => c.city.name === 'London');
-    mad$ = weatherRe$.filter(c => c.city.name === 'Madrid');
-    mia$ = weatherRe$.filter(c => c.city.name === 'Miami');
-    nic$ = weatherRe$.filter(c => c.city.name === 'Nice');
-    nyc$ = weatherRe$.filter(c => c.city.name === 'New York');
-    por$ = weatherRe$.filter(c => c.city.name === 'Porto');
-    rom$ = weatherRe$.filter(c => c.city.name === 'Rome');
-    sfc$ = weatherRe$.filter(c => c.city.name === 'San Francisco');
-    tok$ = weatherRe$.filter(c => c.city.name === 'Tokyo');
-
-  }
+  let cities$ = require('./mockData').cities$;
 
   return Ob$.combineLatest(
 
@@ -65,29 +23,7 @@ export default function model(actions, HTTP){
   
       // sieved responses stream
   
-      Ob$.combineLatest(
-  
-        // each raw response stream
-  
-        bcn$.startWith(null), 
-        ber$.startWith(null), 
-        cop$.startWith(null), 
-        ist$.startWith(null), 
-        lon$.startWith(null),
-        mad$.startWith(null),
-        mia$.startWith(null), 
-        nic$.startWith(null), 
-        nyc$.startWith(null),
-        por$.startWith(null), 
-        rom$.startWith(null),
-        sfc$.startWith(null), 
-        tok$.startWith(null),
-  
-        // combine to make sieved responses stream 
-  
-        (bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, sfc, tok) => [bar, ber, cop, ist, lon, mad, mia, nic, nyc, por, rom, sfc, tok]
-  
-      ).map(cities => {
+      cities$.map(cities => {
   
         // sieve the raw streams
   
