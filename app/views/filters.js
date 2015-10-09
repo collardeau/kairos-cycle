@@ -73,7 +73,8 @@ let styles = {
   'backgroundColor': '#6CD1EA',
   'width': '140px',
   'padding': '5px 8px',
-  'color': '#fff'
+  'color': '#fff',
+  'fontWeight': 'normal'
  },
   'selectBox': {
     'padding': '0',
