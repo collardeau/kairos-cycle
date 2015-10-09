@@ -1,11 +1,12 @@
 /** @jsx hJSX */ 
 import {hJSX} from '@cycle/dom';
+// import arrow images here to avoid a request
 
 export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays, minDays}) {
 
  return (
     <div style={styles.container}>
-      <h2 style={styles.header}>CHASE BETTER WEATHER</h2> <div style={styles.filters}>
+      <h2 style={styles.header}>FIND YOUR WEATHER</h2> <div style={styles.filters}>
 
         <div>Starting</div>
         <div style={styles.selectBox}> 
@@ -82,7 +83,7 @@ let styles = {
     'borderRadius': '3px',
     'overflow': 'hidden',
     'backgroundColor': '#fff',
-    'background': '#fff url("arrowdown.gif") no-repeat 90% 50%'  
+    'background': '#fff url("img/arrowdown.gif") no-repeat 90% 50%'  
   },
 
   'select': {

@@ -6,49 +6,19 @@ export default function view(state$) {
 
   return state$.map(({selectedMinHigh, selectedMinSun, selectedDuration, startDay, filteredCities}) => {
     
-    let styles = {
-      'app': {
-        'margin': '0 auto',
-        'width': '85%' 
-      },
-      'cities': {
-        'display': 'flex',
-        'flexWrap': 'wrap',
-        'justifyContent': 'space-around'
-      },
-      'header': {
-        'padding': '0.5em 0',
-        'textAlign': 'center'
-      },
-      'heading': {
-        'margin': '0 auto',
-        'marginTop': '0.5em',
-        'backgroundColor': 'white',
-        'padding': '0.5em',
-        'borderRadius': '25px',
-        'height': '30px',
-        'lineHeight': '30px',
-        'textAlign': 'center',
-        'maxWidth': '150px'
-      },
-      'footer': {
-        'paddingTop': '1.3em',
-        'textAlign': 'center'
-      }
-   }
-
     return (
 
       <div style={styles.app}>
 
         <div style={styles.header}>
-          <img src='white_logo.png' />
+          <img src='img/white_logo.png' />
         </div>
 
         { renderFilters({selectedMinSun, selectedMinHigh, startDay, selectedDuration }) }       
 
         <h3 style={styles.heading}>
-          { filteredCities.length} { filteredCities.length > 1 ? 'Results' : 'Result' }
+          { filteredCities.length } 
+          { filteredCities.length > 1 ? ' Results' : ' Result' }
         </h3>
 
         <div style={styles.cities}>
@@ -68,7 +38,7 @@ export default function view(state$) {
         }
         </div>
         <div style={styles.footer}>
-          <img src='black_logo.png' />  
+          <img src='img/black_logo.png' />  
           <p><a href='http://thomas.collardeau.com'>thomas.collardeau.com</a></p>
         </div>
 
@@ -76,4 +46,36 @@ export default function view(state$) {
     )
   });
 }
+
+let styles = {
+  'app': {
+    'margin': '0 auto',
+    'width': '85%' 
+   },
+   'cities': {
+     'display': 'flex',
+     'flexWrap': 'wrap',
+     'justifyContent': 'space-around'
+   },
+   'header': {
+     'padding': '0.5em 0',
+     'textAlign': 'center'
+   },
+   'heading': {
+     'margin': '0 auto',
+     'marginTop': '0.5em',
+     'backgroundColor': 'white',
+     'padding': '0.5em',
+     'borderRadius': '25px',
+     'height': '30px',
+     'lineHeight': '30px',
+     'textAlign': 'center',
+     'maxWidth': '150px'
+   },
+   'footer': {
+     'paddingTop': '1.3em',
+     'textAlign': 'center'
+   }
+}
+
 
