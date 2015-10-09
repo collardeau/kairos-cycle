@@ -1,13 +1,21 @@
 var express = require('express');
-var logger = require('morgan');
 var app = express();
+var superagent = require('superagent');
+//var Cycle = require('@cycle/core');
+//var Ob$ = Cycle.Rx.Observable;
 
+var URL = 'http://api.openweathermap.org/data/2.5/forecast/daily';
 
-app.use(logger("combined"));
-
-app.use(function(req, res) {
-  res.writeHead(200, { "Content-Type": "text/plain"});
-  res.end("Hello world!\n");
+superagent
+.get(URL)
+.set('x-api-key','5ba09e308c10daeb4737c29d3fef2907')
+.query({ id: 524901, cnt: 7 })
+.end(function(err, res) {
+  console.log(res.body);
 });
 
-app.listen(3000);
+app.listen(3000, function(){
+  console.log('listening on port 3000...');
+});
+
+
