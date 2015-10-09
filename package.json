@@ -23,6 +23,7 @@
   "dependencies": {
     "@cycle/core": "3.1.0",
     "@cycle/dom": "5.3.0",
-    "@cycle/http": "4.0.0"
+    "@cycle/http": "4.0.0",
+    "express": "4.13.3"
   }
 }
