@@ -3,7 +3,6 @@ import {hJSX} from '@cycle/dom';
 import intent from './intent'
 import model from './model'
 import view from './view';
-import {requests$} from './ajax/requests';
 
 export default function app ({DOM, HTTP}) {
 
@@ -14,7 +13,7 @@ export default function app ({DOM, HTTP}) {
   //state$.subscribe(x => console.log(x));
   return {
     DOM: vtree$,
-    HTTP: requests$ 
+    HTTP: Ob$.just('cities')
   };
 }
 
