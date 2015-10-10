@@ -7,6 +7,9 @@ var Ob$ = Cycle.Rx.Observable;
 // avoid es6 function on heroku?
 var URL = 'http://api.openweathermap.org/data/2.5/forecast/daily';
 
+var isProd = process.env.NODE_ENV === 'production';
+var port = isProd ? process.env.PORT : 3000;
+
 function fetchCity(cityName) {
   return new RSVP.Promise(function(resolve, rej) {
     superagent
@@ -53,8 +56,8 @@ app.get('/cities', function(req, res) {
 
 app.use(express.static('public'));
 
-app.listen(3000, function(){
-  console.log('listening on port 3000...');
+app.listen(port, function(){
+  console.log('listening on port ' + port);
 });
 
 

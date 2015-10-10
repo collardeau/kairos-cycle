@@ -4,9 +4,10 @@
   "description": "Weather app that filters the forecast",
   "main": "index.js",
   "scripts": {
-    "start": "node server",
-    "dev": "webpack-dev-server --inline --progress --colors --content-base public",
+    "start": "node server.js",
     "build": "webpack -p --config webpack-prod.config.js",
+    "postinstall": "node heroku.js",
+    "dev": "webpack-dev-server --inline --progress --colors --content-base public",
     "test": "mocha --compilers js:babel/register --recursive",
     "test:watch": "npm run test -- --watch"
   },
