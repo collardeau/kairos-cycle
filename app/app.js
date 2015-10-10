@@ -1,8 +1,10 @@
 /** @jsx hJSX */ 
 import {hJSX} from '@cycle/dom';
+import {Rx} from '@cycle/core';
 import intent from './intent'
 import model from './model'
 import view from './view';
+let Ob$ = Rx.Observable;
 
 export default function app ({DOM, HTTP}) {
 
