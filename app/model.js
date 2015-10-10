@@ -8,7 +8,7 @@ export default function model(actions, HTTP){
     changeMinSun$, changeMinHigh$ } = actions;
 
   let cities$;
-  let production = false;
+  let production = true;
 
   if(production){
     cities$ = HTTP
