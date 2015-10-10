@@ -33,6 +33,7 @@ export default function view(state$) {
 let styles = {
   'app': {
     'margin': '0 auto',
+    'marginTop': '0.3em',
     'width': '85%' 
    },
    'header': {

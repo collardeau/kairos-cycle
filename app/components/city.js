@@ -66,6 +66,7 @@ function view(state$){
 
 let sty = {
   'container': {
+    'flex': '0 0 250px',
     'marginTop': '1em',
     'backgroundColor': '#C2EAE9',
     'padding': '1.3em',
