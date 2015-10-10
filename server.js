@@ -26,18 +26,21 @@ function fetchCity(cityName) {
 var oneHour = 1000 * 60 * 60;
 var bar$ = Ob$.timer(0, oneHour).flatMap(x => fetchCity('barcelona'));
 var ber$ = Ob$.timer(10, oneHour).flatMap(x => fetchCity('berlin'));
+var cap$ = Ob$.timer(70, oneHour).flatMap(x => fetchCity('capri'));
 var cop$ = Ob$.timer(70, oneHour).flatMap(x => fetchCity('copenhagen'));
+var fra$ = Ob$.timer(70, oneHour).flatMap(x => fetchCity('frankurt'));
+var ist$ = Ob$.timer(20, oneHour).flatMap(x => fetchCity('istanbul'));
 var lis$ = Ob$.timer(20, oneHour).flatMap(x => fetchCity('lisbon'));
 var lon$ = Ob$.timer(20, oneHour).flatMap(x => fetchCity('london'));
 var mad$ = Ob$.timer(80, oneHour).flatMap(x => fetchCity('madrid'));
 var mia$ = Ob$.timer(50, oneHour).flatMap(x => fetchCity('miami'));
 var nic$ = Ob$.timer(60, oneHour).flatMap(x => fetchCity('nice'));
 var nyc$ = Ob$.timer(30, oneHour).flatMap(x => fetchCity('newyork'));
-var sin$ = Ob$.timer(40, oneHour).flatMap(x => fetchCity('singapore'));
+var sfc$ = Ob$.timer(30, oneHour).flatMap(x => fetchCity('sanfrancisco'));
 
 var cities$ = Ob$.combineLatest(
-  bar$, ber$, cop$, lis$, lon$, mad$, mia$, nic$, nyc$, sin$, 
-  (a, b, c, d, e, f, g, h, i, j) => [a, b, c, d, e, f, g, h, i, j])
+  bar$, ber$, cap$, cop$, fra$, ist$, lis$, lon$, mad$, mia$, nic$, nyc$, sfc$, 
+  (a, b, c, d, e, f, g, h, i, j, k, l, m) => [a, b, c, d, e, f, g, h, i, j, k, l, m])
 
 var cities= [];
 cities$.subscribe(latestCities => {
