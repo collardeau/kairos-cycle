@@ -23,58 +23,19 @@ function fetchCity(cityName) {
   })
 }
 
-var nyc = fetchCity('newyork');
-var nyc$ = Ob$.fromPromise(nyc);
+var oneMinute = 1000 * 60;
+var nyc$ = Ob$.timer(0, oneMinute).flatMap(x => fetchCity('newyork'));
+var sin$ = Ob$.timer(0, oneMinute).flatMap(x => fetchCity('singapore'));
 
-//nyc$.subscribe(x => console.log(x));
+var cities$ = Ob$.combineLatest(nyc$, sin$, (a, b) => [a, b])
 
-var nyc$ = Ob$.timer(0, 2000).flatMap(x => fetchCity('newyork'));
-
-nyc$.subscribe(x => console.log(x));
-
-
-var bcn = fetchCity('barcelona');
-var cop = fetchCity('copenhagen');
-var mia = fetchCity('miami');
-var bcn$ = Ob$.fromPromise(bcn);
-var cop$ = Ob$.fromPromise(cop);
-var mia$ = Ob$.fromPromise(mia);
-
-function fetchCities() {
-  return Ob$.combineLatest(
-    bcn$, mia$,
-    ((a, b) => [a, b])
-  )
-}
-
-var cities$;
-var cities;
-
-function load(){
-  cities$ = fetchCities();
-  cities = [];
-  return cities$.subscribe(c => {
-    cities = c; 
-  });
-}
-
-var refetch = load();
-
-//var interval = setInterval(function(){
-//  console.log('hello');
-//}, 10000)
-//
-
-var old = false;
+var cities= [];
+cities$.subscribe(latestCities => {
+  cities = latestCities;
+});
 
 app.get('/cities', function(req, res) {
   res.json(cities);
-  if(old) {  
-    refetch.dispose();
-    refetch = load();
-  }else{
-    //old = true; 
-  }
 });
 
 app.use(express.static('public'));
