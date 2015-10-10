@@ -1,19 +1,16 @@
 var express = require('express');
-var app = express();
 var RSVP = require('rsvp');
 var superagent = require('superagent');
 var Cycle = require('@cycle/core');
-var Ob$ = Cycle.Rx.Observable;
-// avoid es6 function on heroku?
-var URL = 'http://api.openweathermap.org/data/2.5/forecast/daily';
+var Firebase = require('firebase');
 
-var isProd = process.env.NODE_ENV === 'production';
-var port = isProd ? process.env.PORT : 3000;
+var Ob$ = Cycle.Rx.Observable;
+var app = express();
 
 function fetchCity(cityName) {
   return new RSVP.Promise(function(resolve, rej) {
     superagent
-    .get(URL)
+    .get('http://api.openweathermap.org/data/2.5/forecast/daily')
     .set('x-api-key','5ba09e308c10daeb4737c29d3fef2907')
     .query({ 
       q: cityName,
@@ -55,11 +52,23 @@ cities$.subscribe(latestCities => {
   cities = latestCities;
 });
 
+var ref = new Firebase('http://kairos.firebaseio.com');
+function save(ip){
+  ref.child('connects').push({
+    ip: ip,
+    stamp: Firebase.ServerValue.TIMESTAMP
+  })
+}
+
 app.get('/cities', function(req, res) {
   res.json(cities);
+  save(req.ip);
 });
 
 app.use(express.static('public'));
+
+var isProd = process.env.NODE_ENV === 'production';
+var port = isProd ? process.env.PORT : 3000;
 
 app.listen(port, function(){
   console.log('listening on port ' + port);
