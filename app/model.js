@@ -7,15 +7,14 @@ export default function model(actions, HTTP){
     changeMinSun$, changeMinHigh$ } = actions;
 
   let cities$;
-  let production = true;
-
-  if(production){
+  if(__PROD__){
     cities$ = HTTP
     .filter(re$ => re$.request.indexOf('cities') > -1)
      .mergeAll()
     .map(res => res.body);
   }else{
-    cities$ = require('./mockData').cities$;
+    let citiesReq = require('json!./mockResponse.json');
+    cities$ = Ob$.just(citiesReq).delay(1000 * 2);
   }
 
   return Ob$.combineLatest(

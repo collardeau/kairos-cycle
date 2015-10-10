@@ -23,6 +23,13 @@ module.exports = {
       test: /\.(png|gif|jpg)$/,
       loader: 'url-loader?limit=12500' 
     }]
-  }
+  },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      __PROD__: 'true' 
+    })
+  ]
+
 
 };
