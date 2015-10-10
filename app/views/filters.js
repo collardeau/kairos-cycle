@@ -1,7 +1,7 @@
 /** @jsx hJSX */ 
 import {hJSX} from '@cycle/dom';
 
-export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays, minDays}) {
+export default function renderFilters({selectedMinHigh, selectedMinSun}) {
 
  return (
     <div style={styles.container}>
