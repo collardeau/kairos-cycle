@@ -23,6 +23,16 @@ function fetchCity(cityName) {
   })
 }
 
+var nyc = fetchCity('newyork');
+var nyc$ = Ob$.fromPromise(nyc);
+
+//nyc$.subscribe(x => console.log(x));
+
+var nyc$ = Ob$.timer(0, 2000).flatMap(x => fetchCity('newyork'));
+
+nyc$.subscribe(x => console.log(x));
+
+
 var bcn = fetchCity('barcelona');
 var cop = fetchCity('copenhagen');
 var mia = fetchCity('miami');
@@ -50,10 +60,10 @@ function load(){
 
 var refetch = load();
 
-var interval = setInterval(function(){
-  console.log('hello');
-}, 10000)
-
+//var interval = setInterval(function(){
+//  console.log('hello');
+//}, 10000)
+//
 
 var old = false;
 
