@@ -1,6 +1,5 @@
 /** @jsx hJSX */ 
 import {hJSX} from '@cycle/dom';
-// import arrow images here to avoid a request
 
 export default function renderFilters({selectedMinHigh, selectedMinSun, maxDays, minDays}) {
 

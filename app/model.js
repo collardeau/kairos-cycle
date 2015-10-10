@@ -1,5 +1,4 @@
 import {Rx} from '@cycle/core';
-
 let Ob$ = Rx.Observable;
 
 export default function model(actions, HTTP){ 
@@ -8,14 +7,13 @@ export default function model(actions, HTTP){
     changeMinSun$, changeMinHigh$ } = actions;
 
   let cities$;
-  let production = true;
+  let production = false;
 
   if(production){
     cities$ = HTTP
     .filter(re$ => re$.request.indexOf('cities') > -1)
      .mergeAll()
     .map(res => res.body);
-    //cities$.subscribe(x => console.log(x)) 
   }else{
     cities$ = require('./mockData').cities$;
   }
@@ -115,6 +113,7 @@ export default function model(actions, HTTP){
        return city.minHigh >= selectedMinHigh
         && city.minSun >= selectedMinSun;
       }),
+      citiesAvail: cities.length ? true : false,
       selectedMinHigh,
       selectedMinSun,
       startDay,

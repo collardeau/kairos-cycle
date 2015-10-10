@@ -33,6 +33,6 @@ export let rom$ = Ob$.just(romReq).delay(600);
 export let san$ = Ob$.just(sanReq).delay(1000);
 export let sfc$ = Ob$.just(sfcReq).delay(100);
 export let tok$ = Ob$.just(tokReq).delay(0);
-export let cities$ = Ob$.just(citiesReq).delay(1000);
+export let cities$ = Ob$.just(citiesReq).delay(1000 * 4);
 
 
