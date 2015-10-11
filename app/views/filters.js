@@ -11,7 +11,7 @@ export default function renderFilters({selectedMinHigh, selectedMinSun}) {
         <div style={styles.selectBox}> 
           <select style={styles.select} id="forecastFrom">
             <option value="0">Tomorrow</option>
-            <option value="1">day after tomorrow</option>
+            <option value="1">Day after Tomorrow</option>
           </select>
         </div>
         <div style={{'marginTop': '0.5em'}}>For:</div>
@@ -79,7 +79,7 @@ let styles = {
     'padding': '0',
     'margin': '0 auto',
     'border': '1px solid #6CD1EA',
-    'width': '150px',
+    'width': '200px',
     'borderRadius': '3px',
     'overflow': 'hidden',
     'backgroundColor': '#fff',
