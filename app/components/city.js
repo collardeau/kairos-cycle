@@ -48,7 +48,7 @@ function view(state$){
         <p>Highs of <b>{ maxHigh }&ordm;C</b></p> 
       }
 
-     <p>Lowest night low: <b> { minLow }&ordm;C</b></p>
+     <p>Lowest at night: <b> { minLow }&ordm;C</b></p>
 
      { minSun > 29 ?
           <p>At least <b>{minSun}% clear sky</b> each day.</p> :
