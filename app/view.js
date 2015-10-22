@@ -22,7 +22,10 @@ export default function view(state$) {
 
         <div style={styles.footer}>
           <img src={blackLogo} />  
-          <p><a href='http://thomas.collardeau.com'>thomas.collardeau.com</a></p>
+          <p>Made by <a href='http://thomas.collardeau.com'>thomas.collardeau.com</a>
+            <br />Data from openweathermap.org
+          </p>
+          
         </div>
 
       </div> 
