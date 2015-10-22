@@ -24,18 +24,18 @@ export default function renderFilters({selectedMinHigh, selectedMinSun}) {
             <option value="5">5 days</option>
           </select>
         </div>
-        <span>
+        <div>
           <h4 style={styles.heading}>Temperature</h4>
-        </span>
+        </div>
         <div>
           <labeled-slider 
-            key = {1} id="minHigh" label="" mea="&ordm;C"
+            key = {1} id="minHigh" label="" mea="&ordm;C high"
             initial = {selectedMinHigh} min="0" max="30"
           />
         </div>
-        <span>
+        <div>
           <h4 style={styles.heading}>Sunny</h4>
-        </span>
+        </div>
         <div>
           <labeled-slider 
             key = {2} id="minSun" label=""  mea="% clear sky"
