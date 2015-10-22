@@ -31,6 +31,11 @@ function view(state$){
   let { forecasts, name, minSun, minLow, maxHigh, minHigh, timespan } = state.props;
   let deg = '$ordm;';
 
+  if(name === "Trevi") { name = "Rome"; }
+  if(name === "San Nicolas") { name = "Buenos Aires"; }
+  if(name === "Britanski trg") { name = "Zagreb"; }
+  if(name === "Floriana") { name = "Malta"; }
+
   return (
     <div style={sty.container}>
       <h3 style={sty.name}>{name}</h3>
@@ -43,7 +48,7 @@ function view(state$){
         <p>Highs of <b>{ maxHigh }&ordm;C</b></p> 
       }
 
-     <p>Lowest expected temp: <b> { minLow }&ordm;C</b></p>
+     <p>Lowest night low: <b> { minLow }&ordm;C</b></p>
 
      { minSun > 29 ?
           <p>At least <b>{minSun}% clear sky</b> each day.</p> :

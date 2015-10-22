@@ -33,7 +33,7 @@ export default function renderCities(avail, cities) {
       }
 
     </div>
-  )
+  );
 
 }
 

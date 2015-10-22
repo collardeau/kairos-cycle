@@ -20,29 +20,35 @@ function fetchCity(cityName) {
 }
 
 var oneHour = 1000 * 60 * 60;
+
 var bar$ = Ob$.timer(0, oneHour).flatMap(x => fetchCity('barcelona'));
 var ber$ = Ob$.timer(10, oneHour).flatMap(x => fetchCity('berlin'));
-var cap$ = Ob$.timer(90, oneHour).flatMap(x => fetchCity('capri'));
+var bue$ = Ob$.timer(200, oneHour).flatMap(x => fetchCity('buenosaires, arg'));
+var cap$ = Ob$.timer(90, oneHour).flatMap(x => fetchCity('rome,it'));
 var cop$ = Ob$.timer(80, oneHour).flatMap(x => fetchCity('copenhagen'));
-var fra$ = Ob$.timer(70, oneHour).flatMap(x => fetchCity('frankurt'));
 var ist$ = Ob$.timer(100, oneHour).flatMap(x => fetchCity('istanbul'));
 var lis$ = Ob$.timer(20, oneHour).flatMap(x => fetchCity('lisbon'));
 var lon$ = Ob$.timer(120, oneHour).flatMap(x => fetchCity('london'));
 var mad$ = Ob$.timer(80, oneHour).flatMap(x => fetchCity('madrid'));
+var mal$ = Ob$.timer(80, oneHour).flatMap(x => fetchCity('valetta, malta'));
 var mia$ = Ob$.timer(150, oneHour).flatMap(x => fetchCity('miami'));
 var myk$ = Ob$.timer(50, oneHour).flatMap(x => fetchCity('mykonos'));
-var nic$ = Ob$.timer(60, oneHour).flatMap(x => fetchCity('nice'));
+var nic$ = Ob$.timer(60, oneHour).flatMap(x => fetchCity('nice,fr'));
 var nyc$ = Ob$.timer(130, oneHour).flatMap(x => fetchCity('newyork'));
 var par$ = Ob$.timer(110, oneHour).flatMap(x => fetchCity('paris'));
 var sev$ = Ob$.timer(140, oneHour).flatMap(x => fetchCity('sevilla,es'));
 var sfc$ = Ob$.timer(30, oneHour).flatMap(x => fetchCity('sanfrancisco, us'));
+var sin$ = Ob$.timer(170, oneHour).flatMap(x => fetchCity('singapore'));
+var spl$ = Ob$.timer(180, oneHour).flatMap(x => fetchCity('split,croatia'));
+var syd$ = Ob$.timer(25, oneHour).flatMap(x => fetchCity('sydney,aus'));
+var tok$ = Ob$.timer(160, oneHour).flatMap(x => fetchCity('tokyo,jp'));
 
 var cities$ = Ob$.combineLatest(
-  bar$, ber$, cap$, cop$, fra$, ist$, lis$, lon$, mad$, mia$, myk$, nic$, nyc$, par$, sev$, sfc$,
-  (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) => (
-    [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p]
+  bar$, ber$, bue$, cap$, cop$, ist$, lis$, lon$, mad$, mal$, mia$, myk$, 
+  nic$, nyc$, par$, sev$, sfc$, sin$, spl$, syd$, tok$,
+  (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v) => (
+    [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v]
   ))
-
 
 var cities= [];
 cities$.subscribe(latestCities => {
