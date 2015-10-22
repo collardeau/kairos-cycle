@@ -20,8 +20,8 @@ export default function model(actions, HTTP){
   return Ob$.combineLatest(
 
     // user action streams
-    changeMinHigh$.startWith(10),
-    changeMinSun$.startWith(50),
+    changeMinHigh$.startWith(15),
+    changeMinSun$.startWith(60),
     changeStartDay$.startWith("0"),
     changeDuration$.startWith("3"),
 
